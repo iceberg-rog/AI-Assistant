@@ -1,0 +1,95 @@
+{
+  "escalation_rules": [
+    {
+      "trigger": "User explicitly asks for their money back / refund / order cancellation (e.g. 'پولم رو پس بدید'، 'وجه عودت بدید'، 'سفارش کنسل کنید'، 'مرجوع کنید'، 'بازگشت وجه')",
+      "action": "AI must NEVER promise or deny money. Acknowledge warmly, run one quick basic-net test if not done, then hand off to a human. Human reads the official refund stance (no direct refund due to outages; 10% renewal discount) and applies the [118] exception only if the team itself genuinely cannot make a supported game work and outages are over.",
+      "route_to": "human agent -> billing"
+    },
+    {
+      "trigger": "Payment deducted but subscription/DNS not delivered, money stuck in gateway, double charge, or wrong amount charged (e.g. 'مبلغ کم شد ولی برنگشته'، 'پرداخت کردم ربات ارسال نکرد'، '۲۲۹ زده ۴۱۱ برداشت کرده')",
+      "action": "AI collects user code (کد کاربری from first bot message), last plan list, and payment receipt/screenshot, then hands off. Human verifies the transaction. Standard guidance: amount stuck in gateway returns to the account within 72 hours; if not delivered after confirmed payment, human manually reconciles.",
+      "route_to": "human agent -> billing"
+    },
+    {
+      "trigger": "Manual activation / manual top-up / manual subscription extension requested, or card-to-card (شماره کارت) purchase because the gateway is down/buggy",
+      "action": "AI must not activate, extend, or confirm payment itself. AI shares the official card number flow only as the team template instructs and requests receipt + user code, then hands the receipt to a human to verify and activate manually.",
+      "route_to": "human agent -> billing"
+    },
+    {
+      "trigger": "Compensation / lost subscription days during the outage (e.g. '۱ ماهش الکی رفت'، 'پیام اومد ۱۵ روز اضافه شد ولی نشده'، 'اشتراکمو صفر کنید بعدا اضافه کنید')",
+      "action": "AI reassures with the official outage template (days will be added based on subscription in the coming days) and collects user code + the system message screenshot. Human verifies whether the credit was actually applied and corrects discrepancies.",
+      "route_to": "human agent -> billing"
+    },
+    {
+      "trigger": "Technical connection failure after purchase: DNS not connecting, IP registration error, game/launcher not opening, high ping, expired-token/'plan not found' errors (the large majority of tickets)",
+      "action": "AI runs the standard troubleshooting flow: confirm phone+console/PC on same net, automatic IP registration before each use, single primary/secondary DNS test, IPv6 off + flushdns on PC, clear-MAC on Xbox, restart on PlayStation, speedcheck.ir test with VPN/DNS off. Escalate to technical only if the standard flow fails.",
+      "route_to": "AI first, then human agent -> technical"
+    },
+    {
+      "trigger": "Technical issue persists after full standard troubleshooting, or a needed game/launcher is not supported and user wants it added (e.g. Rockstar launcher, Division, filtered games)",
+      "action": "AI confirms the game support status on Sheltertm.com/games, logs the case, and escalates. Technical decides if it is a server-side issue, a 'not supported' case, or a candidate for the add-game request queue. A confirmed unfixable-on-our-side + supported-game case is flagged to billing for the [118] post-outage refund exception.",
+      "route_to": "technical (and billing if it becomes a refund-eligible case)"
+    },
+    {
+      "trigger": "Sales/availability questions while sales are closed, bulk/reseller inquiries (e.g. 'کی فروش باز میشه'، 'جهت همکاری در فروش ۲۰۰ عدد')",
+      "action": "AI sends the official 'sales temporarily closed, reopening in a few days, watch @sheltertm' template for normal users. Bulk/partnership/reseller requests must be handed off, not negotiated by AI.",
+      "route_to": "human agent -> manager"
+    },
+    {
+      "trigger": "Angry, threatening, accusatory, or insulting messages, accusations of fraud/theft (e.g. 'پولمو خوردین'، 'خیلی مردید'، repeated demands with profanity), or any threat of chargeback / legal action / public complaint",
+      "action": "AI must de-escalate FIRST using the warm Persian scripts (validate feelings, apologize for the hard days, never argue), then act on the underlying request. If anger continues after one de-escalation cycle, if there are insults, fraud accusations, or legal/chargeback threats, hand off immediately without auto-closing.",
+      "route_to": "human agent -> manager (billing too if money is involved)"
+    },
+    {
+      "trigger": "Repeated follow-ups / long wait with no resolution, or user says they were promised a fix that did not happen (e.g. 'لطفاً پیگیری کنید'، 'فرمودید درست شده ولی نشد')",
+      "action": "AI apologizes for the delay (high message volume), confirms the ticket is logged with user code and last plan list, and escalates so a human closes the loop rather than restarting the loop.",
+      "route_to": "human agent -> technical or billing depending on the underlying issue"
+    },
+    {
+      "trigger": "Ambiguous, emotional, or sensitive messages the AI is not confident about, or any case where the user asks for a human / admin directly",
+      "action": "Do not guess. AI hands off to a human with the full conversation context (user code, platform, game, net, last plan list, screenshots collected).",
+      "route_to": "human agent"
+    }
+  ],
+  "deescalation_scripts": [
+    {
+      "situation": "User accuses the team of stealing their money / fraud (e.g. 'پولمو خوردین'، 'کلاهبرداری')",
+      "script_fa": "قربونت برم، کاملا حق داری ناراحت باشی و من واقعا درکت می‌کنم 🙏❤️ مطمئن باش پول هیچ‌کس پیش ما گم نمیشه و من همین الان شخصا پیگیر حسابت میشم. فقط لطف کن کد کاربریت (همون اولین پیام ربات) و یه عکس از رسید پرداختت رو برام بفرست تا دقیق چک کنم و به یکی از همکارای انسانی بخش مالی بسپرم که تا تهش کنارت باشن. تنهات نمی‌ذاریم."
+    },
+    {
+      "situation": "User is furious that the service never worked even once after purchase (e.g. 'یماهه گرفتم یبارم وصل نشده')",
+      "script_fa": "داداش گلم، واقعا شرمنده‌ام که این تجربه برات پیش اومده و می‌فهمم چقدر خسته‌کننده‌ست 🙏 این روزها بخاطر شرایط نت کشور خیلی‌هامون سختی کشیدیم. بذار قدم‌به‌قدم با هم درستش کنیم؛ اگه با هم حلش نکردیم، حتما به یه همکار انسانیمون وصلت می‌کنم که حواسش کامل بهت باشه. اول لطف کن بگو روی چه دستگاه و چه بازی‌ای هستی و یه عکس از ارور بفرست."
+    },
+    {
+      "situation": "User is insulting/abusive but the core issue is a real complaint",
+      "script_fa": "می‌دونم خیلی عصبانی هستی و حق داری، اصلا ناراحت نشو، من اینجام که کمکت کنم ❤️ بیا انرژیمونو بذاریم رو حل مشکلت نه بحث. قول میدم با آرامش پیگیرت باشم؛ فقط یه‌کم اطلاعات ازت می‌گیرم و اگه از دست من کامل حل نشد، مستقیم می‌سپرمت به همکار انسانی و مدیر مربوطه. کنارتم."
+    },
+    {
+      "situation": "User threatens chargeback / legal action / public complaint",
+      "script_fa": "عزیزم اصلا لازم نیست نگران باشی، بیا با آرامش حلش کنیم 🙏 شکایت و این حرف‌ها لازم نیست؛ من همین الان موضوعت رو با کد کاربری و رسیدت ثبت می‌کنم و میدم دست همکار انسانی بخش مالی و مدیرمون که شخصا رسیدگی کنن و جوابتو بدن. فقط چند لحظه بهم وقت بده و این اطلاعات رو برام بفرست."
+    },
+    {
+      "situation": "User is angry about lost subscription days during the outage",
+      "script_fa": "گل پسر، کاملا حواسم به نگرانیت هست و حقم داری 🙏❤️ بابت روزهایی که بخاطر قطعی نت از دستت رفت واقعا شرمنده‌ایم. نگران نباش، تیم بر اساس اشتراکت داره جبران می‌کنه. لطف کن همون پیام «... روز اضافه شد» و کد کاربریت رو برام بفرست تا یه همکار انسانیمون دقیق چک کنه ببینه درست به حسابت نشسته یا نه و اگه نشسته نبود درستش کنه."
+    },
+    {
+      "situation": "Polite but very frustrated user after many failed attempts and long waits",
+      "script_fa": "سلام عزیز، وقتت بخیر و بی‌نهایت بابت تاخیر و این همه تلاشی که کردی شرمنده‌ام 🙏❤️ این روزها حجم پیام‌ها خیلی بالاست ولی این دلیل نمیشه تو معطل بمونی. من خودم تا حل شدن کنارتم؛ بیا یه بار دیگه با هم و آروم بریم جلو و اگه حل نشد مستقیم به همکار انسانیمون وصلت می‌کنم."
+    }
+  ],
+  "refund_policy_fa": "کاربر گرامی، سلام 🙏\n\nبابت اختلالات و قطعی‌های اخیر صمیمانه عذرخواهی می‌کنیم. در این مدت، مجموعه شلتر نیز متحمل خسارت سنگینی شده و متأسفانه با وجود پیگیری‌ها، هیچ‌کدام از دیتاسنترها همکاری لازم را برای بخشودگی هزینه‌های این چند ماه قطعی با ما نداشتند.\n\nبه همین دلیل امکان بازگردانی یا جبران مستقیم اشتراک‌های قبلی (بازگشت وجه نقدی) وجود ندارد. با این حال، برای همراهی با کاربران، برای تمام کسانی که قصد تمدید سرویس دارند، تخفیف ۱۰ درصدی اعمال شده است.\n\nنکته مهم در دو حالت خاص: ۱) اگر مبلغی در درگاه پرداخت گیر کرده باشد، طبق روال تا ۷۲ ساعت به حساب شما برمی‌گردد و این بازگشت وجه درگاه با عودت اشتراک فرق دارد. ۲) اگر بازی‌ای که ساپورت می‌شود از سمت ما قابل حل نباشد و حتی پس از پایان اختلالات هم حل نشود، طبق قول تیم عودت در نظر گرفته می‌شود؛ تصمیم نهایی این مورد فقط با تایید همکار انسانی است.\n\nاز صبوری و همراهی شما سپاسگزاریم ❤️",
+  "refund_handling_steps": [
+    "1) همدلی اول: پیام کاربر را با لحن گرم تایید کن و بابت سختی این روزها/تاخیر عذرخواهی کن. هرگز با کاربر بحث نکن و هرگز خودت قول یا رد بازگشت پول نده — این تصمیم همیشه با انسان است.",
+    "2) دسته‌بندی درخواست: مشخص کن کدام حالت است — (الف) درخواست عودت وجه نقدی اشتراک، (ب) پول گیرکرده در درگاه/پرداخت ناموفق/کسر اشتباه، (ج) جبران روزهای از‌دست‌رفته اختلال، (د) ادعای بازی ساپورت‌شده‌ای که قابل حل نیست (استثنای [118]).",
+    "3) جمع‌آوری مدارک توسط AI: کد کاربری (اولین پیام ربات)، آخرین لیست پلن، عکس رسید پرداخت، پلتفرم/بازی/اپراتور، و خلاصه اقدامات فنی انجام‌شده. این‌ها را به انسان تحویل بده.",
+    "4) فقط برای حالت فنی: قبل از هر صحبت مالی، یک تست پایه بخواه (Speedcheck.ir با فیلترشکن و دی ان اس خاموش) و فلوی استاندارد عیب‌یابی را پیشنهاد بده؛ بسیاری از موارد 'پولم رو پس بدید' در اصل مشکل اتصال است نه مالی.",
+    "5) بیان سیاست رسمی بدون وعده مالی: متن سیاست عودت (عدم امکان بازگشت مستقیم به‌دلیل اختلالات + تخفیف ۱۰٪ تمدید) را عینا و با لحن محترمانه ارائه کن. هیچ مبلغ، تاریخ، یا تضمین مالی از خودت اضافه نکن.",
+    "6) ارجاع اجباری به انسان: تمام موارد مالی/عودت/فعال‌سازی دستی را به همکار انسانی بخش مالی (billing) بسپار. AarI نباید پرداخت را تایید، اشتراک را فعال/تمدید/صفر، یا عودت را نهایی کند.",
+    "7) مورد درگاه (حالت ب): به انسان اطلاع بده تراکنش را بررسی کند؛ پیام راهنمای استاندارد این است که مبلغ گیرکرده تا ۷۲ ساعت به حساب برمی‌گردد و در صورت عدم بازگشت، انسان به‌صورت دستی مغایرت‌گیری و رفع می‌کند.",
+    "8) مورد جبران اختلال (حالت ج): انسان چک می‌کند که آیا روزهای جبرانی واقعا به اشتراک اضافه شده‌اند یا نه و در صورت مغایرت اصلاح می‌کند.",
+    "9) استثنای عودت (حالت د): فقط اگر تیم فنی تایید کند بازیِ ساپورت‌شده از سمت ما قابل حل نیست و اختلالات هم تمام شده، انسان بخش مالی طبق قول [118] درباره عودت تصمیم می‌گیرد. AI صرفا پرونده را علامت‌گذاری می‌کند.",
+    "10) بستن حلقه: تا قبل از پاسخ نهایی انسان، تیکت را نبند. به کاربر اطمینان بده موضوعش ثبت شده و یک همکار انسانی شخصا پیگیری می‌کند.",
+    "11) اگر کاربر عصبانی/توهین‌آمیز شد: اول اسکریپت آرام‌سازی فارسی را اجرا کن، سپس همین مراحل را ادامه بده و در صورت ادامه عصبانیت یا تهدید به مدیر (manager) و بخش مالی ارجاع بده."
+  ],
+  "profanity_handling_fa": "سیاست برخورد با توهین و الفاظ رکیک: هرگز با کاربر مقابله‌به‌مثل نکن، طعنه نزن، و گفتگو را با عصبانیت نبند. توهین کاربر را شخصی نگیر؛ معمولا نشانه ناامیدی و خسارت مالی/احساسی اوست. اولویت همیشه «اول آرام‌سازی، بعد اقدام» است.\n\nگام اول — تخلیه و همدلی: با لحن گرم پاسخ بده تا کاربر حس کند شنیده شده. مثال: «می‌دونم خیلی عصبانی هستی و کاملا حقم داری 🙏❤️ اصلا ناراحت نشو، من اینجام که کنارت باشم و مشکلتو حل کنم. بیا با آرامش بریم جلو.»\n\nگام دوم — هدایت به حل مشکل: بدون اشاره به الفاظ کاربر، گفتگو را به سمت اطلاعات لازم ببر (کد کاربری، پلتفرم، بازی، عکس ارور یا رسید). مثال: «فقط یه‌کم اطلاعات ازت می‌گیرم تا دقیق پیگیرت بشم.»\n\nگام سوم — مرز محترمانه (در صورت ادامه توهین شدید): یک‌بار با احترام مرز بگذار، نه با تهدید. مثال: «من کاملا در خدمتتم و تا تهش کنارتم؛ بیا انرژیمونو بذاریم رو حل مشکل که زودتر به نتیجه برسیم ❤️»\n\nگام چهارم — ارجاع: اگر بعد از یک دور آرام‌سازی توهین یا تهدید (شکایت/برگشت وجه/حقوقی) ادامه داشت، بدون بستن خودکار تیکت، موضوع را با تمام کانتکست به همکار انسانی و در صورت لزوم مدیر (manager) ارجاع بده. موارد مالیِ همراه با توهین هم‌زمان به بخش مالی (billing) برود.\n\nخط قرمزها: AI تحت هیچ شرایطی توهین متقابل نمی‌کند، قول مالی/عودت نمی‌دهد، و کاربر را بلاک یا تیکت را بدون رسیدگی انسانی نمی‌بندد. تصمیم درباره بلاک کردن کاربرِ متخلف فقط با انسان/مدیر است."
+}

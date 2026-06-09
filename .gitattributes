@@ -1,0 +1,3 @@
+# Keep shell scripts LF even on Windows checkouts, so the Docker container's /bin/sh can run them.
+*.sh text eol=lf
+docker/entrypoint.sh text eol=lf

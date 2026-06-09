@@ -1,0 +1,35 @@
+# secrets & local config
+.env
+.env.bak
+
+# dependencies & build output
+**/node_modules/
+dashboard/.next/
+
+# LIVE runtime data (recreated by the connector) — keep only the KB jsons committed
+dashboard/data/connection_status.json
+dashboard/data/live_conversations.json
+dashboard/data/escalations_live.json
+dashboard/data/conversation_state.json
+dashboard/data/bcid_map.json
+dashboard/data/business_connections.json
+dashboard/data/handled_drafts.json
+dashboard/data/learning_queue.json
+dashboard/data/incidents.json
+dashboard/data/connector.log
+dashboard/data/dashboard.log
+dashboard/data/keepalive.pid
+dashboard/data/media/
+
+# real customer Q&A (PII) — a test artifact, not needed to run; the page shows an empty state without it
+dashboard/data/selftest_report.json
+
+# analysis workspace — contains REAL customer Q&A / messages (PII) + the card number; never publish
+analysis/
+
+# misc local artifacts
+_archive_mock/
+core/events.jsonl
+core/keepalive.ps1
+staging/.token
+staging/events.jsonl

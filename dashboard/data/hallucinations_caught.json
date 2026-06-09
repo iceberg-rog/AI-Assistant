@@ -1,0 +1,66 @@
+{
+  "note": "fabrications the adversarial pass caught across all 27 intents",
+  "by_intent": [
+    {
+      "intent": "presale_game_supported",
+      "fa_label": "پیش‌خرید: آیا این بازی/پلتفرم پشتیبانی می‌شود؟",
+      "count": 3,
+      "items": [
+        "escalate_when references a 'site request form' for adding unsupported games — no such mechanism appears in the real replies. The corpus only tells users to check the site/channel (Sheltertm.com/games, @sheltertm) for which games are coming; there is no request form. The escalation should route to human/channel, not an invented form.",
+        "Answer line 3 ('اگه بازیت تو لیست بود، روی کنسول و پی‌سی و موبایل جواب میده داداش') states a flat guarantee. Real agents never guarantee — they consistently hedge with 'اگر با نتتون سازگار باشه' (line 385) and tell users to TEST first ('تستمون باز شده میتونید تست کنید'). The unconditional 'جواب میده' overstates certainty relative to the corpus.",
+        "facts_used includes 'Console (PS5/Xbox)' specificity — corpus confirms console generally ('شلتر برای کنسول جوابه؟' -> 'اره عزیز اوکیع', line 261-263) and PS5 appears in user messages, but Xbox is never explicitly confirmed as supported in any support reply. The PS5/Xbox parenthetical is partly unverified."
+      ]
+    },
+    {
+      "intent": "ip_transfer_between_accounts",
+      "fa_label": "انتقال ثبت آیپی به شماره/اکانت دیگر",
+      "count": 2,
+      "items": [
+        "facts_used includes 'هر دی‌ان‌اس فقط روی یک دستگاه قابل استفاده است' — true per line 356 but belongs to a different (device-usage) intent, not the transfer flow; irrelevant padding here.",
+        "facts_used includes 'بیش از ۲۰ بار ثبت آیپی در ۲۴ ساعت باعث مسدودی ۲۴ ساعته می‌شود' — true per line 291 but is an IP-registration ban policy from a different intent, not part of account transfer."
+      ]
+    },
+    {
+      "intent": "conn_generic_not_working",
+      "fa_label": "اتصال برقرار نمی‌شود (عمومی)",
+      "count": 1,
+      "items": [
+        "answer_lines[1] instructs to register IP with 'دی‌ان‌اس روشن' (DNS ON). This contradicts every relevant real reply, which say to register/test with VPN(filtershekan) AND DNS OFF (e.g. lines 6, 23: 'فیلترشکن و دی ان استون قطع باشه'; lines 134-135: 'بدون vpn و یا dns'; line 49: register IP first, then enter DNS). DNS must be OFF during registration, not ON."
+      ]
+    },
+    {
+      "intent": "speed_ping_packetloss",
+      "fa_label": "سرعت پایین / پینگ بالا / پکت‌لاس",
+      "count": 1,
+      "items": [
+        "required_tools lists get_server_status, get_subscription, get_registered_ip, get_game_support — none of these are used or implied by this diagnostic flow in the real replies; they are irrelevant to the answer content (not a claim inside answer_lines, but unsupported card metadata)."
+      ]
+    },
+    {
+      "intent": "abuse_profanity",
+      "fa_label": "فحاشی و توهین",
+      "count": 3,
+      "items": [
+        "answer_line 2 promises 'تنهات نمیذاریم تا درست شه' (we won't leave you until it's fixed) — no real reply makes a fix/stay-with-you commitment; this is an invented reassurance.",
+        "answer_line 5 promises 'همین الان میدمش دست همکارم تا دستی پیگیری کنه' (handing it to my colleague right now for manual follow-up) — no real reply mentions an internal handoff to a colleague; invented escalation promise.",
+        "answer_line 1 'معطلی' (delay/waiting) is mildly added detail; the real abusive-opener reply (line 479) contains no apology for delay, though delay-apologies appear generically elsewhere — keep only as soft, generic apology."
+      ]
+    },
+    {
+      "intent": "dns_concept_question",
+      "fa_label": "سوال مفهومی درباره دی‌ان‌اس/سرویس",
+      "count": 1,
+      "items": [
+        "Answer line 4 ('نرم‌افزار جدا هم نمی‌خواد' / no separate software needed) is not explicitly stated in any real support reply. It is a reasonable inference (you only use the Telegram bot + device DNS settings), but no pair affirms 'no separate app'. It also sits awkwardly next to the fact that registration DOES happen via a separate Telegram bot. Weakly grounded — softened in corrected lines."
+      ]
+    },
+    {
+      "intent": "free_download_dns_request",
+      "fa_label": "دی‌ان‌اس رایگان / دی‌ان‌اس دانلود",
+      "count": 1,
+      "items": [
+        "The reminder 'اگه پلن اختصاصی داری یادت نره قبل استفاده ثبت آیپی کنی' narrows IP registration to dedicated-plan owners. The real replies instruct all users to register IP before each use (e.g. 'قبل هر بار استفاده، از داخل ربات تلگرام ثبت آی‌پی اتوماتیک انجام بدید حتما')—there is no support for conditioning it on owning a dedicated plan."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "name": "shelter-core",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Shelter Support AI — core engine (tools, policy-gate, agent, telegram adapter). Stub adapters; runs on Node native TypeScript.",
+  "scripts": {
+    "demo": "node run-demo.ts",
+    "test": "node --test tests/engine.test.ts"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.102.0"
+  }
+}

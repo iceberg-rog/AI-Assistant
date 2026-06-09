@@ -1,0 +1,52 @@
+{
+  "_source": "DETERMINISTIC — assembled by analysis/scripts/build_dashboard_metrics.mjs from analysis/out/{recon,response_latency,resolution_signals,intents_coarse}.json, streamed from the 354MB Telegram export (result.json). No hand-set values.",
+  "_generatedFromChats": 40190,
+  "dataset": {
+    "chats": 40189,
+    "total_messages": 548184,
+    "customer_msgs": 358061,
+    "support_msgs": 189683,
+    "window": "2025-10-27 .. 2026-06-07 (~7.5mo)"
+  },
+  "sla": {
+    "human_first_reply_median_min": 47.4,
+    "p90_min": 2292.4,
+    "p99_min": 8295.4
+  },
+  "satisfaction_proxy": {
+    "positive": 10193,
+    "negative": 5504,
+    "neutral": 24109,
+    "positive_rate": 0.256,
+    "negative_rate": 0.138
+  },
+  "intent_volume_coarse": {
+    "greeting": 64094,
+    "dns_config": 49163,
+    "connection_problem": 35814,
+    "buy_prepurchase": 25933,
+    "gratitude": 22560,
+    "complaint_angry": 17738,
+    "subscription_status": 17721,
+    "speed_ping": 13175,
+    "platform_setup": 12472,
+    "profanity": 7167,
+    "payment_gateway": 4295,
+    "refund": 532,
+    "server_region": 344
+  },
+  "automation_tier_volume": {
+    "auto": {
+      "volume": 179529,
+      "share": 0.662
+    },
+    "copilot": {
+      "volume": 66042,
+      "share": 0.244
+    },
+    "human": {
+      "volume": 25437,
+      "share": 0.094
+    }
+  }
+}

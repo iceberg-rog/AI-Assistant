@@ -1,0 +1,40 @@
+# dependencies & build output (reinstalled / rebuilt inside the image)
+**/node_modules
+dashboard/.next
+
+# secrets & local config (mounted at runtime, never baked into the image)
+.env
+.env.bak
+
+# vcs / editor / os
+.git
+.gitignore
+*.log
+.DS_Store
+
+# analysis workspace + the giant Telegram export (not needed at runtime)
+analysis
+_archive_mock
+staging/.token
+staging/events.jsonl
+core/events.jsonl
+
+# LIVE runtime data — recreated by the connector at startup; only the KB jsons are baked in
+dashboard/data/connection_status.json
+dashboard/data/live_conversations.json
+dashboard/data/escalations_live.json
+dashboard/data/conversation_state.json
+dashboard/data/bcid_map.json
+dashboard/data/business_connections.json
+dashboard/data/handled_drafts.json
+dashboard/data/learning_queue.json
+dashboard/data/incidents.json
+dashboard/data/connector.log
+dashboard/data/dashboard.log
+dashboard/data/keepalive.pid
+dashboard/data/media
+
+# docker meta (not needed inside the image)
+Dockerfile
+docker-compose.yml
+.dockerignore

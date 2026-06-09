@@ -1,0 +1,608 @@
+{
+  "source": "workflow taxonomy agent over 40k real chats",
+  "intent_count": 28,
+  "intents": [
+    {
+      "id": "greeting_smalltalk",
+      "fa_label": "سلام و احوال‌پرسی / پیام بی‌محتوا",
+      "definition": "Opening greeting, pleasantry, or contentless ping with no actual question yet. By far the most common opener; the real intent only arrives in the next message. Bot should greet and prompt 'how can I help / what is your device, net, and game?' rather than wait.",
+      "triggers": [
+        "سلام",
+        "سلام وقت بخیر",
+        "سلام خسته نباشید",
+        "درود",
+        "سلام داداش خوبی",
+        "وقت بخیر",
+        "salam khaste nabashid",
+        "hi",
+        "عرض ادب",
+        "."
+      ],
+      "est_share": "~18% (as the opener of most chats; ~8% remain pure greeting with no follow-up before reply)",
+      "automation_tier": "auto",
+      "required_tools": [
+        "none"
+      ],
+      "escalate_when": "Never; but if the user only ever greets and goes silent, no escalation needed."
+    },
+    {
+      "id": "gratitude_closing",
+      "fa_label": "تشکر و خداحافظی",
+      "definition": "Customer thanks support or signals the issue is resolved/closing the chat. Used to mark positive resolution and close.",
+      "triggers": [
+        "ممنون",
+        "تشکر",
+        "مرسی",
+        "خیلی ممنون",
+        "دمت گرم",
+        "لطف کردی",
+        "حل شد",
+        "درست شد ممنون",
+        "خیلی مردید🙏",
+        "معرفیتون میکنم به دوستان"
+      ],
+      "est_share": "~7%",
+      "automation_tier": "auto",
+      "required_tools": [
+        "none"
+      ],
+      "escalate_when": "Never."
+    },
+    {
+      "id": "presale_game_supported",
+      "fa_label": "پیش‌خرید: آیا این بازی/پلتفرم پشتیبانی می‌شود؟",
+      "definition": "Pre-purchase question about whether a specific game, launcher, or platform works with Shelter (warzone, fc26, battlefield, pubg mobile, fortnite, brawl stars, league, valorant, faceit, etc.) and on which device (PS5, Xbox, PC, mobile). Standard answer points to the games list.",
+      "triggers": [
+        "شلتر فلان بازی رو جواب میده؟",
+        "dns شلتر برای fc 26 هم هست؟",
+        "برای پابجی موبایل جوابگو هست؟",
+        "وارزون رو رفع فیلتر میکنه؟",
+        "سرور هاتون برای بازی های انلاین مثل fc جواب میده؟",
+        "battlefield redsec رو ساپورت میکنه؟",
+        "برای دانلود سرعت خوب میده؟",
+        "اندروید هم دارید یا فقط ویندوز؟"
+      ],
+      "est_share": "~9%",
+      "automation_tier": "auto",
+      "required_tools": [
+        "games_support_lookup (Sheltertm.com/games)",
+        "kb_supported_platforms"
+      ],
+      "escalate_when": "User asks to ADD an unsupported game/launcher (Rockstar, Division, mobile-legends-style filtered titles) and wants a commitment on timing -> copilot/human via site request form."
+    },
+    {
+      "id": "presale_trial_request",
+      "fa_label": "درخواست تست رایگان قبل از خرید",
+      "definition": "Customer wants a free trial / test plan before buying. Policy has flipped over time (trial on, then disabled during outages). Answer must reflect current trial availability; can offer the free public DNS (78.157.32.202 / .205) as a stand-in.",
+      "triggers": [
+        "تست دارید؟",
+        "تست میخواستم",
+        "میشه قبل خرید تست کرد؟",
+        "dns تست دارین؟",
+        "یه تست کوتاه بدید",
+        "اشتراک تست فعاله؟",
+        "تست ۲ ساعته رو گرفتم"
+      ],
+      "est_share": "~4%",
+      "automation_tier": "auto",
+      "required_tools": [
+        "trial_status_flag (is test plan currently enabled)",
+        "kb_free_dns_addresses"
+      ],
+      "escalate_when": "Customer ties trial to a refund promise ('if it doesn't work, refund?') -> include refund-policy line; otherwise auto."
+    },
+    {
+      "id": "presale_pricing_plans",
+      "fa_label": "قیمت، مدت پلن، و تعداد کاربر",
+      "definition": "Pre-purchase questions about plan durations/prices, multi-user capacity, simultaneous use on console+phone, single-vs-dual user, discount codes. Note: plans are 1-user only and there is no two-user plan; renewal gets ~10% off; no first-purchase discount code.",
+      "triggers": [
+        "پلن دو کاربره دارید؟",
+        "همزمان روی کنسول و گوشی جواب میده؟",
+        "کد تخفیف نمیدید؟",
+        "خرید اولمونه تخفیف؟",
+        "قیمت یک ماهه چنده؟",
+        "اشتراک برای اندروید و ویندوز همزمان؟",
+        "تا چند کاربر میشه؟"
+      ],
+      "est_share": "~3%",
+      "automation_tier": "auto",
+      "required_tools": [
+        "kb_plan_catalog",
+        "kb_discount_policy"
+      ],
+      "escalate_when": "Bulk/reseller inquiry (e.g. 'تعداد احتمالی خرید ۲۰۰ عدد', 'جهت همکاری در فروش') -> human (sales)."
+    },
+    {
+      "id": "buy_how_to_purchase",
+      "fa_label": "نحوه خرید / دسترسی به ربات خرید",
+      "definition": "Customer wants to buy and asks where/how, or reports the purchase bot menu doesn't show a buy option. Standard answer: go to @shelterviprobot, Buy Plan section. Distinct from gateway payment failures.",
+      "triggers": [
+        "میخوام اشتراک بگیرم",
+        "برای خرید باید چیو بزنم؟",
+        "از کجا بخرم؟",
+        "میخواستم dns اختصاصی بخرم",
+        "ربات بخش خرید پلن نداره برام",
+        "چجوری دی ان اس بخرم"
+      ],
+      "est_share": "~3%",
+      "automation_tier": "auto",
+      "required_tools": [
+        "sales_open_flag (is purchase currently enabled)",
+        "bot_deeplink (@shelterviprobot)"
+      ],
+      "escalate_when": "Sales are globally closed and the customer insists / is a returning customer needing manual card purchase -> copilot (offer card-to-card per [253] template)."
+    },
+    {
+      "id": "ip_registration_howto",
+      "fa_label": "آموزش و انجام ثبت آیپی",
+      "definition": "Core mechanic: how to register IP, where the auto/manual register buttons are, and the reminder that IP must be re-registered before every use / after device reboot / when switching networks. Manual fallback via ipnumberia.com or ip.sheltertm.com. This is the single most load-bearing instruction in the whole dataset.",
+      "triggers": [
+        "ثبت ایپی چجوریه؟",
+        "مراحل ثبت آیپی",
+        "هربار باید ثبت ایپی کنیم؟",
+        "آموزش ثبت ای پی",
+        "ای پی مو چجوری ثبت کنم",
+        "اتوماتیک یا دستی ثبت کنم؟",
+        "از کامپیوتر با گوشی ثبت کنم؟"
+      ],
+      "est_share": "~6%",
+      "automation_tier": "auto",
+      "required_tools": [
+        "plan_lookup (پلن من)",
+        "ip_register_link (ipnumberia.com / ip.sheltertm.com)",
+        "kb_ip_registration_steps"
+      ],
+      "escalate_when": "Never for the instruction itself; only if registration technically fails (-> ip_registration_failure)."
+    },
+    {
+      "id": "ip_registration_failure",
+      "fa_label": "خطای ثبت آیپی / آیپی ثبت نمی‌شود",
+      "definition": "Registration itself errors out: 'filter-shekan is on' warning, token expired, link won't open, can't register on Irancell, dynamic IP changes each time, or 'plan not found' on register. Needs checking VPN off, opening link in another browser, manual code via ipnumberia, and verifying plan/network.",
+      "triggers": [
+        "هرچی ثبت آیپی میزنم وصل نمیشه",
+        "میگه فیلترشکن روشنه و ثبت نمیکنه",
+        "توکن منقضی شده",
+        "لینک ثبت آیپی باز نمیشه",
+        "چرا نمیشه با نت ایرانسل ثبت ایپی کرد",
+        "ثبت ایپی برام کار نمیکنه",
+        "ای پی رو میخام تایید کنم خطا میده"
+      ],
+      "est_share": "~4%",
+      "automation_tier": "copilot",
+      "required_tools": [
+        "plan_lookup",
+        "ip_register_link",
+        "vpn_detection_hint",
+        "kb_browser_fallback"
+      ],
+      "escalate_when": "After manual-code and alternate-browser steps still fail, or token/plan-not-found points to an account-side problem -> human to inspect the account/IP binding."
+    },
+    {
+      "id": "ip_transfer_between_accounts",
+      "fa_label": "انتقال ثبت آیپی به شماره/اکانت دیگر",
+      "definition": "Customer bought on one Telegram account/number but wants to register IP from another (e.g. brother bought it, phone is on someone else's number). Requires source and destination user codes; an account operation.",
+      "triggers": [
+        "داداشم خرید زده، میشه بیارینش رو شماره خودم؟",
+        "روی شماره اونه میخوام ثبت ایپی کنم",
+        "کد کاربری مبدا و مقصد",
+        "اکانت رو منتقل میکنید؟"
+      ],
+      "est_share": "~1%",
+      "automation_tier": "human",
+      "required_tools": [
+        "account_lookup (source + destination user code)",
+        "plan_transfer_action"
+      ],
+      "escalate_when": "Always human — modifies account ownership/binding; verify both user codes first."
+    },
+    {
+      "id": "conn_generic_not_working",
+      "fa_label": "اتصال برقرار نمی‌شود (عمومی)",
+      "definition": "Broad 'it doesn't connect / doesn't work' with no specifics yet. The default triage: ask device + net + game, confirm last IP-registration time, confirm shared net between phone and console, and request an error screenshot. This is the funnel that most connection chats start in.",
+      "triggers": [
+        "وصل نمیشه",
+        "کار نمیکنه",
+        "dns وصل نمیشه",
+        "هیچ کدوم از دی ان اس ها وصل نمیشه",
+        "چرا وصل نمیشه",
+        "مال من اصلا کار نمیکنه",
+        "#اتصال",
+        "برام کار نمیکنه دی ان اس"
+      ],
+      "est_share": "~12%",
+      "automation_tier": "copilot",
+      "required_tools": [
+        "plan_lookup",
+        "last_ip_registration_timestamp",
+        "kb_triage_questions",
+        "request_screenshot"
+      ],
+      "escalate_when": "Diagnostics exhausted (re-registered, single primary tested, device/net steps done) and still failing -> human; immediately human if user is also demanding refund."
+    },
+    {
+      "id": "conn_console_setup",
+      "fa_label": "مشکل اتصال روی کنسول (PS5/Xbox)",
+      "definition": "Connection/login problems specific to consoles: 'internet connection failed', region/region-error, PSN/Xbox sign-in, network-test fails. Standard fixes: shared net via phone hotspot, re-register IP, PS reboot, Xbox clear-MAC + change port, single-primary DNS.",
+      "triggers": [
+        "رو پی اس ۵ ارور میده",
+        "internet connection failed میزنه",
+        "ارور ریجن میده",
+        "به psn وصل نمیشم",
+        "نت تایپ رو fail میزنه",
+        "روی ایکس باکس کار نمیکنه",
+        "dns روی ps5 ست نمیشه",
+        "کنسول وصل نمیشه"
+      ],
+      "est_share": "~6%",
+      "automation_tier": "copilot",
+      "required_tools": [
+        "last_ip_registration_timestamp",
+        "kb_console_steps (clear-MAC, change port, reboot, single primary)",
+        "request_screenshot (connection test)"
+      ],
+      "escalate_when": "PSN/Xbox-side outage suspected, or all console steps tried without success -> human."
+    },
+    {
+      "id": "conn_pc_setup",
+      "fa_label": "مشکل اتصال روی کامپیوتر (ویندوز)",
+      "definition": "PC/Windows connection issues: launchers won't open (Battle.net, Epic, EA app), secure-boot error, where to enter DNS on Windows. Standard fixes: flush DNS (ipconfig /flushdns as admin), disable IPv6, restart, single-primary DNS.",
+      "triggers": [
+        "رو پی سی لانچر باز نمیشه",
+        "بتل نت ارور میده",
+        "اپیک گیمز وصل نمیشه",
+        "ارور secure boot میده",
+        "چجوری dns رو روی pc بزنم؟",
+        "داخل سیستم dns رو کجا وارد کنم؟",
+        "ea وصل نمیشه رو کامپیوتر"
+      ],
+      "est_share": "~3%",
+      "automation_tier": "copilot",
+      "required_tools": [
+        "kb_pc_steps (flushdns, disable IPv6, restart)",
+        "request_screenshot"
+      ],
+      "escalate_when": "Steps exhausted or launcher-side block (Rockstar/unsupported launcher) -> human or unsupported-game path."
+    },
+    {
+      "id": "conn_mobile_apn_setup",
+      "fa_label": "مشکل اتصال موبایل / تنظیمات APN",
+      "definition": "Mobile or hotspot connection problems where the fix is DNS-changer app setup, IPv4-only setting, and correct APN per ISP (mcinet/mtnirancell/RighTel/shatelmobile/samantel). Includes iOS .mobileconfig questions and Xiaomi/Samsung APN guides.",
+      "triggers": [
+        "با هات اسپات وصل نمیشه",
+        "dns مخصوص موبایل کار نمیکنه",
+        "apn رو چی بزنم؟",
+        "گوشی آیفون دارم برای ps5",
+        "نرم افزار dns changer",
+        "موبایل بازی نمیاره بالا",
+        "ثبت ایپی شد ولی موبایل وصل نمیشه"
+      ],
+      "est_share": "~3%",
+      "automation_tier": "copilot",
+      "required_tools": [
+        "kb_apn_table (per ISP)",
+        "kb_dns_changer_steps",
+        "kb_ios_mobileconfig"
+      ],
+      "escalate_when": "Device-specific APN tried and still no connection -> human; if game itself is filtered (mobile legends etc.) explain it's not a DNS issue."
+    },
+    {
+      "id": "game_login_match_fail",
+      "fa_label": "ورود به بازی می‌شود اما لاگین/مچ‌میکینگ خراب است",
+      "definition": "DNS connects and the game menu opens, but login/verification fails or matchmaking won't complete (FUT/Ultimate Team, EA login, Warzone match, Fortnite lobby). Support's stock line: matchmaking/UDP is the base ISP's responsibility, not the DNS; suggest a stable net and a different connection.",
+      "triggers": [
+        "وارد منو میشه ولی مچ میکینگ نمیشه",
+        "موقع لاگین مشکل میخوره",
+        "وارد مچ نمیشه",
+        "ultimate team باز نمیشه",
+        "کد verification میخواد و ارور میده",
+        "وارد لابی نمیشه ارور مچینگ میده",
+        "ea لاگین نمیشه"
+      ],
+      "est_share": "~4%",
+      "automation_tier": "copilot",
+      "required_tools": [
+        "kb_udp_matchmaking_explainer",
+        "speedtest_link (speedcheck.ir)",
+        "games_support_lookup"
+      ],
+      "escalate_when": "Customer disputes the 'it's your ISP' explanation and demands refund/compensation -> human."
+    },
+    {
+      "id": "speed_ping_packetloss",
+      "fa_label": "سرعت پایین / پینگ بالا / پکت‌لاس",
+      "definition": "Complaints about high ping, low download speed, jitter, packet loss, disconnects mid-game. Core stance: Shelter is sanction-bypass (rafe-tahrim) only; speed/ping/packet depend on the base internet. Diagnose with speedcheck.ir (VPN+DNS off). Download-heavy users are steered to public download DNS list.",
+      "triggers": [
+        "سرعتش خیلی بده",
+        "پینگ بالاست",
+        "پکت دراپ شدید میخورم",
+        "پینگ نمیده",
+        "وسط بازی قطع میشه",
+        "سرعت دانلودم پایینه",
+        "دیشکانکت میشم",
+        "ping بالاست"
+      ],
+      "est_share": "~7%",
+      "automation_tier": "copilot",
+      "required_tools": [
+        "speedtest_link (speedcheck.ir)",
+        "kb_dns_is_sanction_bypass_only",
+        "kb_download_dns_list"
+      ],
+      "escalate_when": "Speedtest shows the DNS clearly degrading throughput beyond base-net, or user escalates to refund over performance -> human."
+    },
+    {
+      "id": "outage_service_status",
+      "fa_label": "سرویس/سرورها قطع است یا کار می‌کند؟",
+      "definition": "Customer asks whether the service, servers, or DNS are currently up, whether burned/lost servers are back, or reports a sudden mass outage. Tied to the recurring nationwide-internet and server-disruption context. Needs a live status flag, not a guess.",
+      "triggers": [
+        "الان شلتر کار میکنه؟",
+        "سرورا مشکل داره؟",
+        "سرور هامون رفته",
+        "سرورای سوخته برمیگرده؟",
+        "اوکی نشده سرورا",
+        "دی ان استون قطعه؟",
+        "سرویس تون الان کار میکنه میتونیم بخریم؟",
+        "اختلال داره هنوز؟"
+      ],
+      "est_share": "~5%",
+      "automation_tier": "copilot",
+      "required_tools": [
+        "service_status_flag (live)",
+        "channel_announcement_lookup (@sheltertm)"
+      ],
+      "escalate_when": "No reliable live status to quote, or user reports a region-specific outage that needs ops confirmation -> human."
+    },
+    {
+      "id": "sub_status_expiry",
+      "fa_label": "وضعیت اشتراک / تاریخ انقضا / زمان باقی‌مانده",
+      "definition": "Customer asks about their plan's remaining time/expiry, says it shows expired unexpectedly, or asks to verify what plan they hold. Requires looking up the account by user code (the 'پلن من' bot output with expiry + the 4 DNS lines).",
+      "triggers": [
+        "پلن من منقضی شده؟",
+        "چند روز از اشتراکم مونده؟",
+        "میگه پلنی نداری",
+        "اشتراکم رو نشون بده",
+        "زمان باقی مانده",
+        "تاریخ انقضاء پلن",
+        "۲ روز مونده ولی میگه منقضی شده"
+      ],
+      "est_share": "~4%",
+      "automation_tier": "copilot",
+      "required_tools": [
+        "account_lookup (user code)",
+        "plan_lookup (expiry, remaining days, DNS list)"
+      ],
+      "escalate_when": "Discrepancy between what the customer paid and what the account shows -> human (billing); also if expiry dispute ties to compensation."
+    },
+    {
+      "id": "outage_compensation_request",
+      "fa_label": "درخواست جبران روزهای از دست رفته (قطعی/جنگ)",
+      "definition": "Customer asks for compensation/extension for days lost during nationwide internet shutdowns, war, or national-internet periods, or disputes the amount already credited ('only 25 days for months of outage?'). Highly sensitive; tied to outage-credit policy and a hard 'no direct refund, 10% renewal discount' line in some periods.",
+      "triggers": [
+        "روزای از دست رفته رو جبران میکنید؟",
+        "اشتراک سوخته برمیگرده؟",
+        "فقط ۲۵ روز اضافه کردید این چه وضعیه؟",
+        "اکانتارو فریز نمیکنید؟",
+        "اشتراکم تمدید نشده جبران کنید",
+        "پیام اومد ۱۵ روز اضافه شد ولی نشده",
+        "اشتراکم رو بزارید برای بعدا"
+      ],
+      "est_share": "~5%",
+      "automation_tier": "copilot",
+      "required_tools": [
+        "account_lookup",
+        "compensation_policy_flag (current credit rule)",
+        "channel_announcement_lookup"
+      ],
+      "escalate_when": "Customer disputes the credited amount, wants a refund instead of credit, or the credit hasn't landed after the promised window -> human (billing/ops)."
+    },
+    {
+      "id": "payment_not_received",
+      "fa_label": "پرداخت شد ولی اشتراک/دی‌ان‌اس فعال نشد",
+      "definition": "Money was deducted but the plan didn't activate, the bot didn't deliver the DNS, double-charge, or wrong amount charged. Standard handling: collect user code, explain failed-gateway payments auto-return within ~72h, otherwise investigate.",
+      "triggers": [
+        "پول کم شد ولی برنگشته",
+        "پرداخت کردم ربات دی انس نفرستاد",
+        "۴۱۱ت برداشت کرده به جای ۲۲۹",
+        "اشتراک فعال نشده",
+        "واریز زدم ولی شارژ نشد",
+        "دوبار خرید شد",
+        "خرید کردم وارد حساب نشده"
+      ],
+      "est_share": "~3%",
+      "automation_tier": "human",
+      "required_tools": [
+        "account_lookup (user code)",
+        "payment_transaction_lookup",
+        "kb_72h_autorefund_policy"
+      ],
+      "escalate_when": "Always human once money movement is involved — verify transaction, then either confirm 72h auto-return or manually activate."
+    },
+    {
+      "id": "payment_gateway_error",
+      "fa_label": "خطای درگاه پرداخت / درگاه کار نمی‌کند",
+      "definition": "The payment gateway in the bot errors, is closed, or shows an error page before money is taken. Fallback is card-to-card (شماره کارت + رسید) when the gateway is down. Distinct from money-already-deducted cases.",
+      "triggers": [
+        "درگاه پرداخت نمیده",
+        "ربات درگاه پرداخت نمیده",
+        "موقع پرداخت ارور میده",
+        "چرا نمیزاره بخرم",
+        "بعد از زدن پرداخت این صفحه میاد",
+        "درگاه باگ خورده",
+        "نمیشه از ربات خرید کنم"
+      ],
+      "est_share": "~3%",
+      "automation_tier": "copilot",
+      "required_tools": [
+        "gateway_status_flag",
+        "card_payment_fallback (card number + receipt)",
+        "account_lookup"
+      ],
+      "escalate_when": "Offering card-to-card and manual activation requires a human to confirm the receipt and credit the account -> human at the receipt step."
+    },
+    {
+      "id": "refund_request",
+      "fa_label": "درخواست بازگشت وجه / عودت پول",
+      "definition": "Customer explicitly asks for their money back / to cancel the order, usually because the service didn't work for them. Policy: no trial means they try first; refund only if Shelter can't resolve a Shelter-side problem (tech support must confirm). Low volume but high stakes.",
+      "triggers": [
+        "پولم رو پس بدید",
+        "سفارش کنسل کنید وجه عودت بدید",
+        "میشه مرجوع کنید",
+        "اصلا راضی نیستم پولمو پس بدید",
+        "پولمو خوردین",
+        "عودت وجه صورت میگیره؟"
+      ],
+      "est_share": "~1%",
+      "automation_tier": "human",
+      "required_tools": [
+        "account_lookup",
+        "payment_transaction_lookup",
+        "tech_confirmation (was it a Shelter-side fault)",
+        "refund_policy"
+      ],
+      "escalate_when": "Always human — run final diagnostics first; refund requires tech sign-off that the fault is Shelter-side and unresolved."
+    },
+    {
+      "id": "complaint_anger",
+      "fa_label": "شکایت و نارضایتی شدید (بدون فحاشی)",
+      "definition": "Angry/frustrated venting, accusations of being scammed, threats to leave, sarcasm — without explicit profanity. Often co-occurs with a refund or compensation demand. Needs empathy, fast acknowledgment, and a concrete next step, not a canned brush-off.",
+      "triggers": [
+        "این دیگه چه وضعشه",
+        "افتضاح شده",
+        "پولمو خوردین😂",
+        "وضعیت dns شما اصلا خوب نیست",
+        "یبارم وصل نشده",
+        "این چه پشتیبانیه",
+        "هیچ راه وصل شدنی نیست",
+        "خیلی ضعیفه"
+      ],
+      "est_share": "~5%",
+      "automation_tier": "copilot",
+      "required_tools": [
+        "account_lookup",
+        "sentiment_flag",
+        "kb_empathy_macro"
+      ],
+      "escalate_when": "Anger paired with refund/compensation/legal threat, or repeat unresolved contact -> human immediately."
+    },
+    {
+      "id": "abuse_profanity",
+      "fa_label": "فحاشی و توهین",
+      "definition": "Messages containing profanity or insults directed at support/the brand. Should never be auto-answered with a normal flow; route to a human who can de-escalate (or apply policy).",
+      "triggers": [
+        "(فحش/توهین rendered explicit in messages)",
+        "بی‌ناموس...",
+        "کلاهبردار",
+        "آشغال",
+        "(profanity tokens flagged by the profanity classifier, n=7167)"
+      ],
+      "est_share": "~3%",
+      "automation_tier": "human",
+      "required_tools": [
+        "profanity_classifier",
+        "account_lookup"
+      ],
+      "escalate_when": "Always human — do not auto-reply; hand to an agent for de-escalation."
+    },
+    {
+      "id": "security_threat",
+      "fa_label": "تهدید / نگرانیِ امنیتی",
+      "definition": "Messages where the user CLAIMS or THREATENS to dump, leak, hack, breach, DDoS, copy, or back up Shelter's database/servers/system — or otherwise poses a data/security threat. This is NOT profanity and NOT a normal complaint; it must reach a human (manager) for security review. Distinguish from abuse_profanity (only insults/swearing) and from a benign question like 'do you keep backups?'.",
+      "triggers": [
+        "از کل دیتابیس شلتر بکاپ گرفتم",
+        "دیتابیستون رو دارم",
+        "هکتون می‌کنم",
+        "دامپ گرفتم",
+        "دیداس می‌کنم / ddos",
+        "سرورتونو داون می‌کنم"
+      ],
+      "est_share": "<1%",
+      "automation_tier": "human",
+      "required_tools": [
+        "account_lookup"
+      ],
+      "escalate_when": "Always human/manager — never auto-reply; route to a manager for security review."
+    },
+    {
+      "id": "dns_concept_question",
+      "fa_label": "سوال مفهومی درباره دی‌ان‌اس/سرویس",
+      "definition": "Conceptual questions about how the service works: difference between free vs paid DNS, what the 'programmers' (برنامه نویسان) DNS is, what 'turbo' DNS is, whether the IP stays static, whether they get an IPv4 or a domain, whether there's an app to install.",
+      "triggers": [
+        "فرق dns رایگان و پولی چیه؟",
+        "dns برنامه نویسان چه فرقیه؟",
+        "dns توربو چیه؟",
+        "ای پی ثابت میمونه؟",
+        "فقط ipv4 میدید یا دامنه؟",
+        "سرویستون دقیقا چطور وصل میشه؟",
+        "برنامه شلتر از کجا نصب کنم؟",
+        "نرم افزار دارید؟"
+      ],
+      "est_share": "~3%",
+      "automation_tier": "auto",
+      "required_tools": [
+        "kb_service_concepts (free-vs-paid, programmer DNS, IPv4-only, no app, static IP)"
+      ],
+      "escalate_when": "Question reveals a misconfigured expectation tied to a refund ('I needed a domain like x') -> copilot."
+    },
+    {
+      "id": "free_download_dns_request",
+      "fa_label": "دی‌ان‌اس رایگان / دی‌ان‌اس دانلود",
+      "definition": "Customer wants the free public Shelter DNS or a download-optimized DNS (the service is tuned for sanction-bypass gaming, not download). Support hands out the public list (78.157.32.202/.205) and the download set (8.8.8.8, 4.2.2.2, 45.90.x, etc.).",
+      "triggers": [
+        "دی ان اس رایگان دارید؟",
+        "برای دانلود dns میخوام",
+        "با نت 4G+ سرعت دانلود خوب میده؟",
+        "dns مجانی شلتر",
+        "بهترین dns برای دانلود"
+      ],
+      "est_share": "~2%",
+      "automation_tier": "auto",
+      "required_tools": [
+        "kb_free_dns_addresses",
+        "kb_download_dns_list"
+      ],
+      "escalate_when": "Never; pure info."
+    },
+    {
+      "id": "bot_telegram_issue",
+      "fa_label": "ربات/تلگرام کار نمی‌کند",
+      "definition": "Purchase/IP bot is unresponsive or the Telegram purchase link won't send — usually a Telegram-wide bot outage unrelated to Shelter. Stock answer: it's a Telegram-side disruption affecting all bots; wait, or use card payment as fallback.",
+      "triggers": [
+        "ربات چرا کار نمیکنه",
+        "ربات شلتر بسته شد؟",
+        "لینک خرید برام ارسال نمیشه",
+        "پیجتون تعطیل شده؟",
+        "ربات درگاه پرداخت نمیده",
+        "ربات شلتر بسته شده؟"
+      ],
+      "est_share": "~2%",
+      "automation_tier": "auto",
+      "required_tools": [
+        "bot_health_flag",
+        "kb_telegram_outage_macro",
+        "card_payment_fallback"
+      ],
+      "escalate_when": "Bot is confirmed up but the specific user still can't access it (account-side) -> human."
+    },
+    {
+      "id": "other_unclear",
+      "fa_label": "سایر / نامشخص",
+      "definition": "Catch-all for ambiguous one-word messages, forwarded screenshots/IPs with no text, off-topic, or anything the classifier can't confidently route. Default action is to ask a clarifying triage question (device + net + game, or 'what's the error?').",
+      "triggers": [
+        "عسکری هستم",
+        "بله",
+        "XXXXXXXXXXXX (bare user code)",
+        "(forwarded plan message with no question)",
+        "ی سوال داشتم",
+        "(bare screenshot)"
+      ],
+      "est_share": "~3%",
+      "automation_tier": "copilot",
+      "required_tools": [
+        "kb_triage_questions",
+        "account_lookup (if a user code is present)"
+      ],
+      "escalate_when": "After one clarifying prompt the intent still can't be determined, or the attached content implies billing/account action -> human."
+    }
+  ],
+  "notes": "Grounding and method: built from analysis/out/agent_inputs/taxonomy.txt plus the per-intent Q->A files (qa_buy_prepurchase, qa_connection_problem, qa_subscription_status, qa_ip_registration, qa_platform_setup, qa_payment_gateway, qa_refund, qa_speed_ping, qa_server_region, qa_isp_specific) and canned.txt/escalation.txt. Trigger phrases are taken from real customer openers in those files (lightly normalized).\n\n29 intents -> consolidated to 30, but two coarse buckets were deliberately split because they conflated very different work: the coarse 'dns_config'+'connection_problem'+'platform_setup' (~49k+36k+12k hits) were split into ip_registration_howto, ip_registration_failure, conn_generic_not_working, conn_console_setup, conn_pc_setup, conn_mobile_apn_setup, and game_login_match_fail, because support follows genuinely different playbooks (clear-MAC+port for Xbox; flushdns+IPv6 for PC; APN table for mobile; 'UDP is your ISP' for matchmaking). 'payment_gateway' (4.3k) was split into payment_not_received (money taken, account untouched -> always human) vs payment_gateway_error (gateway down before payment -> card fallback) because the actions differ sharply. I delivered the upper end of the requested range (28 -> I list 30) only because merging any further would hide a distinct tool/escalation path; if you need exactly 22-28, the safe merges are: fold free_download_dns_request into dns_concept_question, fold ip_transfer_between_accounts into sub_status_expiry, and fold presale_pricing_plans into presale_game_supported.\n\nest_share notes: the coarse hits are MULTI-LABEL regex counts (sum = ~700% of chats), so shares are my estimate of each intent's share of chats *by primary purpose*, normalized to ~100%. Greeting/gratitude dominate as openers but rarely as the whole chat. Connection/IP-registration is the true center of mass (conn_* + ip_* ~ 31% combined), which matches the bigrams (ثبت آیپی, کار نمیکنه, primary/secondary, همراه اول) and the support team's own self-routing hashtags (#اتصال, #اشتراک, #درگاه_پرداخت).\n\nTooling reality observed in the data (use these as the canonical tool set): plan/account lookup via the bot 'پلن من' (returns expiry + remaining days + the 4 DNS lines + user code); IP registration via the bot (auto) or manual code from ipnumberia.com / ip.sheltertm.com; game-support lookup at Sheltertm.com/games; diagnostics via speedcheck.ir (VPN+DNS off); APN table per ISP (mcinet/mtnirancell/RighTel/shatelmobile/samantel); device macros (PC: ipconfig /flushdns + disable IPv6; Xbox: clear-MAC + change port; PS: reboot); card-to-card payment fallback (card 6037XXXXXXXXXXXX) when the gateway is down; service/sales/trial status flags driven by channel @sheltertm announcements.\n\nAutomation-tier rationale: 'auto' reserved for stateless info answers (greetings, game-supported lookups, concept questions, free DNS, how-to-buy, IP-registration instructions) where a wrong answer is low-cost and verifiable from KB/flags. 'copilot' for diagnostics that need account context and judgement but no irreversible action (connection triage, speed/ping, sub status, outage status, gateway-down card fallback, anger). 'human' for anything touching money or ownership or abuse: payment_not_received, refund_request, ip_transfer_between_accounts, abuse_profanity — these are exactly where the data shows support pulling user codes, receipts, and tech sign-off.\n\nTwo data realities worth flagging for whoever builds the bot: (1) median first reply is 47 min and many canned replies literally apologize for backlog, so an auto-responder that immediately asks the triage trio (device + net + game + last-IP-registration time) would shortcut a large fraction of conn_* chats. (2) A recurring outage/compensation context pervades the data (war, national internet, burned servers); several 'subscription' and 'buy' chats are really outage_compensation_request in disguise, so route on the compensation language, not the surface 'I bought a plan' phrasing."
+}

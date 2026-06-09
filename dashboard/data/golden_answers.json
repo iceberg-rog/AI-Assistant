@@ -1,0 +1,1104 @@
+{
+  "note": "27 fine-intent golden answers; final_answer_fa = adversarially-verified, grounded lines.",
+  "answers": [
+    {
+      "intent": "greeting_smalltalk",
+      "fa_label": "سلام و احوال‌پرسی / پیام بی‌محتوا",
+      "tier": "auto",
+      "summary": "Pure greeting/smalltalk opener with no real question yet. Greet warmly in Shelter voice and prompt for device, net, and game so the real intent surfaces. No tools, never escalate.",
+      "final_answer_fa": "سلام عزیز، وقتتون بخیر 🙏❤️\nخوشحالم که پیام دادی، در خدمتم.\nبفرما چطور می‌تونم کمکت کنم؟\nدستگاهت، نوع نتت و بازیت رو بگو تا راه بندازیمت.",
+      "clarifying_questions": [
+        "دستگاهت چیه؟",
+        "نوع نتت چیه؟",
+        "تو کدوم بازی مشکل داری؟"
+      ],
+      "required_tools": [],
+      "facts_used": [],
+      "escalate_when": [
+        "Never — a pure greeting needs no escalation; if the user only greets and goes silent, no action is needed."
+      ],
+      "do_not_say": [
+        "Don't dump troubleshooting steps, DNS IPs, or prices before the user states an actual problem",
+        "Don't sound robotic or templated — keep it warm (عزیز/داداش, 🙏❤️)",
+        "Don't invent subscription, IP, server, or payment details not yet provided",
+        "Don't ask for a usercode or error screenshot before there's a stated issue"
+      ],
+      "confidence": 0.9,
+      "verification": {
+        "verified_by": "adversarial_agent",
+        "is_grounded": true,
+        "tone_ok": true,
+        "hallucinations_removed": []
+      },
+      "editedAt": "2026-06-08T14:33:41.612Z"
+    },
+    {
+      "intent": "gratitude_closing",
+      "fa_label": "تشکر و خداحافظی",
+      "tier": "auto",
+      "summary": "Warm gratitude/closing reply in Shelter voice; pure auto, no tools, no escalation. qa_fine file had 0 pairs, so tone is grounded in voice.txt closings (🙏❤️، عزیز/داداش، جان متشکرم).",
+      "final_answer_fa": "خواهش میکنم عزیز، خوشحالم که حل شد 🙏❤️\nکاری بود در خدمتیم، فقط یه پیام بده داداش\nهر وقت بازم به مشکلی خوردی، قبل تست یه بار ثبت آیپی رو فراموش نکن 🙏\nمراقب خودت باش، شلتر همیشه کنارته ❤️",
+      "clarifying_questions": [],
+      "required_tools": [],
+      "facts_used": [
+        "IP must be re-registered before every use (ثبت آیپی قبل از هر بار استفاده) — core Shelter policy"
+      ],
+      "escalate_when": [
+        "Never — gratitude/closing is positive resolution; just acknowledge warmly and close."
+      ],
+      "do_not_say": [
+        "Do not upsell or push renewal/discount when the user is only thanking.",
+        "Do not invent prices, IPs, or DNS addresses — none appear in gratitude pairs.",
+        "Do not ask for user code or run lookups; no tools are needed here.",
+        "Do not sound robotic or paste a long canned block; keep it short and warm."
+      ],
+      "confidence": 0.83,
+      "verification": {
+        "verified_by": "adversarial_agent",
+        "is_grounded": true,
+        "tone_ok": true,
+        "hallucinations_removed": []
+      }
+    },
+    {
+      "intent": "presale_game_supported",
+      "fa_label": "پیش‌خرید: آیا این بازی/پلتفرم پشتیبانی می‌شود؟",
+      "tier": "auto",
+      "summary": "Pre-sale question about whether a specific game/launcher/platform is supported by Shelter. Standard auto answer: point to the games list (Sheltertm.com/games), confirm device support (console/PC/mobile), offer the free public DNS to test before buying, and set expectation that Shelter is sanction-bypass only (ping/speed depend on the base net and the game). Note that titles filtered from inside Iran (e.g. Division 1/2) are NOT supported, and some titles are platform/ISP-limited (e.g. Marvel Rivals only on PC + Irancell).",
+      "final_answer_fa": "سلام عزیز، وقتت بخیر 🙏❤️\nلیست کامل بازی‌ها و پلتفرم‌های پشتیبانی‌شده اینجاست: Sheltertm.com/games\nاگه بازیت تو لیست بود، رو کنسول و پی‌سی و موبایل قابل استفاده‌ست؛ بهترین کار اینه قبل خرید خودت تست کنی.\nمی‌تونی با دی‌ان‌اس رایگان ما تست بگیری: 78.157.32.202 و 78.157.32.205\nیادت باشه شلتر فقط رفع‌تحریمه؛ پینگ و سرعت به نت خودت و خود بازی بستگی داره، نه به ما.\nبعضی بازی‌ها که از داخل ایران فیلترن (مثل دیویژن) یا محدودن (مثل مارول رایولز که فقط رو پی‌سی + ایرانسل جواب میده) ساپورت نمیشن.\nهر بازی‌ای رو نگفتم بپرس، یکی‌یکی راهنماییت می‌کنم 🙏",
+      "clarifying_questions": [
+        "کدوم بازی و روی چه دستگاهی؟ (PS5 / Xbox / پی‌سی / موبایل)",
+        "نت‌ت چیه؟ (همراه اول / ایرانسل / مخابرات / فیبر)"
+      ],
+      "required_tools": [
+        "get_game_support",
+        "get_dns_for_category",
+        "get_subscription"
+      ],
+      "facts_used": [
+        "Games/platform support list: Sheltertm.com/games",
+        "Free public Shelter DNS for testing: 78.157.32.202 and 78.157.32.205",
+        "Purchase bot: @Shelterviprobot",
+        "Console (PS5/Xbox), PC and mobile are supported when the title is on the games list",
+        "Shelter is sanction-bypass (rafe-tahrim) only; ping/speed depend on the base internet and the game itself",
+        "Titles filtered from inside Iran (e.g. Division 1/2) are not supported",
+        "Some titles are platform/ISP-limited (e.g. Marvel Rivals supported only on PC + Irancell)"
+      ],
+      "escalate_when": [
+        "User asks to ADD an unsupported game/launcher (e.g. Rockstar, Division) and wants a commitment on timing -> copilot/human via site request form",
+        "Question shifts from 'is it supported' to a refund/compensation demand because a title didn't work -> human"
+      ],
+      "do_not_say": [
+        "Do not promise a specific game will be added by a certain date",
+        "Do not claim Shelter improves ping/speed or guarantees matchmaking — it is sanction-bypass only",
+        "Do not say a filtered-from-inside title (Division, etc.) is supported",
+        "Do not invent prices, plan durations, or a two-user plan",
+        "Do not promise a free trial is active — trial availability flips; offer the free public DNS instead"
+      ],
+      "confidence": 0.8,
+      "verification": {
+        "verified_by": "adversarial_agent",
+        "is_grounded": true,
+        "tone_ok": true,
+        "hallucinations_removed": [
+          "escalate_when references a 'site request form' for adding unsupported games — no such mechanism appears in the real replies. The corpus only tells users to check the site/channel (Sheltertm.com/games, @sheltertm) for which games are coming; there is no request form. The escalation should route to human/channel, not an invented form.",
+          "Answer line 3 ('اگه بازیت تو لیست بود، روی کنسول و پی‌سی و موبایل جواب میده داداش') states a flat guarantee. Real agents never guarantee — they consistently hedge with 'اگر با نتتون سازگار باشه' (line 385) and tell users to TEST first ('تستمون باز شده میتونید تست کنید'). The unconditional 'جواب میده' overstates certainty relative to the corpus.",
+          "facts_used includes 'Console (PS5/Xbox)' specificity — corpus confirms console generally ('شلتر برای کنسول جوابه؟' -> 'اره عزیز اوکیع', line 261-263) and PS5 appears in user messages, but Xbox is never explicitly confirmed as supported in any support reply. The PS5/Xbox parenthetical is partly unverified."
+        ]
+      }
+    },
+    {
+      "intent": "presale_trial_request",
+      "fa_label": "درخواست تست رایگان قبل از خرید",
+      "tier": "auto",
+      "summary": "Golden-answer card for presale_trial_request: trial is obtained from @shelterviprobot (2h/6h test plans) but availability flips with outages; when off, offer free public DNS 78.157.32.202/.205. Always remind ثبت آیپی + shared home net, and point to Sheltertm.com/games. Tier=auto; add refund-policy line only if the customer ties the trial to a refund promise.",
+      "final_answer_fa": "سلام عزیز، خوش اومدی به خانواده شلتر 🙏\nتست از داخل ربات @shelterviprobot، از بخش خرید/تمدید فعال میشه (تست ۲ یا ۶ ساعته).\nاگه تست فعلاً غیرفعال بود، با دی‌ان‌اس رایگان شلتر امتحان کن: 78.157.32.202 و 78.157.32.205\nقبل از هر بار استفاده حتماً ثبت آیپی کن و نت گوشی با کنسول/سیستمت یکی و خونگی باشه ❤️\nبازیتو هم از Sheltertm.com/games چک کن که ساپورت میشه یا نه.\nاگه با خرید جلو رفتی و مشکل سمت ما بود و نتونستیم حلش کنیم، برگشت وجه می‌زنیم داداش 🙏",
+      "clarifying_questions": [
+        "دستگاهت چیه (PS5/Xbox/PC/موبایل) و اپراتور نتت کدومه؟",
+        "کدوم بازی رو می‌خوای تست کنی؟"
+      ],
+      "required_tools": [
+        "trial_status_flag",
+        "kb_free_dns_addresses",
+        "get_game_support",
+        "get_subscription"
+      ],
+      "facts_used": [
+        "تست از ربات @shelterviprobot، بخش خرید پلن / تمدید فعال میشه",
+        "تست ۲ ساعته و تست ۶ ساعته در داده‌ها هر دو دیده شده",
+        "وضعیت تست متغیره: گاهی «تستمون باز شده» و گاهی «تست غیرفعال هست»",
+        "دی‌ان‌اس رایگان شلتر به‌جای تست: 78.157.32.202 و 78.157.32.205",
+        "قبل از هر استفاده باید ثبت آیپی انجام بشه و نت گوشی با کنسول/سیستم مشترک و خونگی باشه",
+        "لیست بازی‌های ساپورت‌شده: Sheltertm.com/games",
+        "خط سیاست بازگشت وجه: «تست نداریم ولی خریداری کنید؛ اگر نتونیم مشکل رو حل کنیم برگشت وجه می‌زنیم»"
+      ],
+      "escalate_when": [
+        "مشتری تست را به وعده‌ی بازگشت وجه گره بزند (اگر کار نکرد پولم برگرده؟) — خط سیاست بازگشت وجه ذکر شود؛ در غیر این صورت auto",
+        "تست بسته است و مشتری بعد از خرید همچنان ناراضی و خواهان عودت پول است → human (refund_request)"
+      ],
+      "do_not_say": [
+        "وعده ندهید که تست همیشه/الان حتماً فعال است؛ وضعیت تست متغیر است و باید با فلگ زنده چک شود",
+        "آدرس آیپی، قیمت یا مدت تستی که در داده‌ها نیست از خودتان نسازید",
+        "بازگشت وجه بی‌قیدوشرط قول ندهید؛ فقط وقتی مشکل سمت شلتر باشد و قابل حل نباشد",
+        "نگویید سرعت/پینگ را تضمین می‌کنیم؛ این‌ها به نت پایه مشتری بستگی دارد"
+      ],
+      "confidence": 0.86,
+      "verification": {
+        "verified_by": "adversarial_agent",
+        "is_grounded": true,
+        "tone_ok": true,
+        "hallucinations_removed": []
+      }
+    },
+    {
+      "intent": "presale_pricing_plans",
+      "fa_label": "قیمت، مدت پلن، و تعداد کاربر",
+      "tier": "auto",
+      "summary": "Pre-purchase pricing/plan questions: plans are 1-user only (no two-user plan), all plans are identical and differ only in duration, no first-purchase discount code but renewal gets ~10% off applied automatically by the bot, and prices/purchase live in @shelterviprobot. Reseller/bulk inquiries go to a human.",
+      "final_answer_fa": "سلام عزیز، روزت بخیر 🙏\nببین داداش، پلن دو کاربره نداریم؛ هر اشتراک فقط یک کاربره هست.\nهمه‌ی اشتراک‌ها یکین، فقط تایمشون فرق داره (یک ماهه، چند ماهه و...).\nکد تخفیف خرید اول نداریم، ولی موقع تمدید خود ربات ۱۰٪ کم می‌کنه برات ❤️\nبرای دیدن قیمت‌ها و خرید کافیه بری توی ربات @shelterviprobot بخش خرید.",
+      "clarifying_questions": [
+        "برای چه پلتفرمی می‌خوای؟ (کنسول / گوشی / کامپیوتر)",
+        "می‌خوای پلن جدید بگیری یا تمدید کنی؟ (تمدید ۱۰٪ تخفیف داره)"
+      ],
+      "required_tools": [
+        "get_subscription",
+        "get_payment_status",
+        "get_game_support"
+      ],
+      "facts_used": [
+        "No two-user plan; plans are 1-user only (line 52: 'نه داداش دو کاربره نداریم')",
+        "All subscriptions are the same, only duration/time differs (line 104: 'تمام اشتراکای ما یکین فقط تایمش متفاوت هستش')",
+        "No discount code, but renewal gets 10% off (lines 74-75: 'کد تخفیف نداریم داداش ولی برای تمدید ۱۰ درصد کم میشه')",
+        "Renewal discount is applied automatically by the bot (line 153: 'به صورت اتومات ربات ده درصد تخفیف اعمال میکنه'; line 227: 'موقع خرید خودش ازتون کم می‌کنه')",
+        "Prices/plans are checked and bought inside the bot @shelterviprobot (lines 393-394, 493-494)",
+        "Reseller/همکاری requires min 10 purchases and 18+ (line 476)"
+      ],
+      "escalate_when": [
+        "Bulk/reseller inquiry (e.g. 'خرید ۲۰۰ عدد', 'جهت همکاری در فروش') -> human (sales); per taxonomy and confirmed by real pair requiring min 10 buys + 18+"
+      ],
+      "do_not_say": [
+        "Do not promise a two-user or multi-user plan exists",
+        "Do not invent specific prices/numbers (e.g. exact toman amounts) not given in the pairs",
+        "Do not offer a first-purchase discount code",
+        "Do not invent plan tiers with different speeds — all plans are identical, only duration differs",
+        "Do not quote a specific reseller price; route bulk/همکاری to sales"
+      ],
+      "confidence": 0.9,
+      "verification": {
+        "verified_by": "adversarial_agent",
+        "is_grounded": true,
+        "tone_ok": true,
+        "hallucinations_removed": []
+      }
+    },
+    {
+      "intent": "buy_how_to_purchase",
+      "fa_label": "نحوه خرید / دسترسی به ربات خرید",
+      "tier": "auto",
+      "summary": "Buy flow: direct customer to @shelterviprobot Buy Plan section, mention free test, remind ثبت آیپی after purchase; card-to-card fallback if bot fails or sales closed.",
+      "final_answer_fa": "سلام عزیز، خرید خیلی راحته 🙏❤️\nوارد ربات @shelterviprobot شو و بخش «خرید پلن» رو بزن.\nطرح موردنظرتو انتخاب کن و پرداخت کن، همونجا تست رایگان هم داریم داداش.\nبعد از خرید، قبل هر بار استفاده حتما با موبایل «ثبت آیپی» بزن.\nاگه از ربات نشد بگو، روش کارت‌به‌کارت برات می‌ذارم و دستی فعالت می‌کنیم ❤️",
+      "clarifying_questions": [],
+      "required_tools": [
+        "sales_open_flag",
+        "bot_deeplink",
+        "get_payment_status",
+        "get_subscription"
+      ],
+      "facts_used": [
+        "Purchase is done in the bot @shelterviprobot via the «خرید پلن» / «بخش خرید» section (pairs at lines 182, 494, 298-308)",
+        "A free test is available from the bot before buying (lines 239, 354-355, 388)",
+        "After buying, ثبت آیپی must be done with the phone before each use (lines 88-89, 99-100, 288)",
+        "Card-to-card fallback when bot purchase fails: card 6037XXXXXXXXXXXX ([نام صاحب کارت]), send receipt photo (lines 472-480)"
+      ],
+      "escalate_when": [
+        "Sales are globally closed (فروش/درگاه بسته) and a returning or insistent customer needs a manual card-to-card purchase -> copilot, offer card 6037XXXXXXXXXXXX + receipt per template at line 253/472-480",
+        "Customer says the bot won't let them buy or shows no Buy option and the bot/Telegram outage is the cause -> verify sales_open_flag and offer card-to-card",
+        "Customer is a reseller / bulk-purchase request (e.g. 200 units) -> human"
+      ],
+      "do_not_say": [
+        "Do not promise specific plan prices or durations — none appear in the real pairs",
+        "Do not claim sales are open right now without checking sales_open_flag (sellers were repeatedly told فروش/درگاه بسته)",
+        "Do not offer a discount code — support explicitly says کد تخفیف نداریم (only 10% on renewal, line 158-159)",
+        "Do not give the card number proactively in the first auto reply; use it only as the escalation fallback",
+        "Do not promise IPv6 or a domain — only IPv4 is provided, domain not yet available (line 108)"
+      ],
+      "confidence": 0.88,
+      "verification": {
+        "verified_by": "adversarial_agent",
+        "is_grounded": true,
+        "tone_ok": true,
+        "hallucinations_removed": []
+      }
+    },
+    {
+      "intent": "ip_registration_howto",
+      "fa_label": "آموزش و انجام ثبت آیپی",
+      "tier": "auto",
+      "summary": "Golden-answer card for ip_registration_howto: warm step-by-step Persian guide to registering IP via the bot's پلن من (auto + manual fallback), with VPN/DNS off, shared net, and the re-register-before-every-use rule. Tier=auto per taxonomy.",
+      "final_answer_fa": "سلام عزیز 🙏 اول داخل ربات شلتر گزینه «پلن من» رو بزن تا دی‌ان‌اس‌هات و دکمه‌های ثبت آیپی (دستی و اتوماتیک) بیاد.\nفیلترشکن و دی‌ان‌است خاموش باشه، و نت گوشی با کنسول یا سیستمی که بازی می‌کنی یکی باشه.\nبعد با گوشی «ثبت آیپی اتوماتیک» رو بزن و صبر کن تا پیام تایید ربات بیاد ❤️\nاگه اتوماتیک نشد، از ip.sheltertm.com یا Ipnumberia.com کد بگیر و توی «ثبت آیپی دستی» وارد کن.\nیادت باشه داداش چون آیپی نت معمولاً ثابت نیست، هر بار قبل استفاده و بعد خاموش‌روشن دستگاه یا عوض‌شدن نت باید دوباره ثبت آیپی کنی.",
+      "clarifying_questions": [],
+      "required_tools": [
+        "get_subscription",
+        "get_registered_ip",
+        "get_dns_for_category"
+      ],
+      "facts_used": [
+        "پلن من in the bot returns DNS lines + manual/auto IP-register buttons",
+        "VPN and DNS off during registration",
+        "Phone and console/PC must share the same network",
+        "Manual fallback via ip.sheltertm.com or Ipnumberia.com -> ثبت آیپی دستی",
+        "Must re-register before every use / after reboot / on network change because IP is not static"
+      ],
+      "escalate_when": [
+        "Registration itself technically fails (token expired, 'filtershekan on' warning, link won't open, can't register on a given ISP, plan-not-found) -> route to ip_registration_failure (copilot)",
+        "Per taxonomy: never escalate for the instruction itself, only when registration fails"
+      ],
+      "do_not_say": [
+        "Don't tell the user one registration lasts forever or that they only register once (real replies stress re-registering before each use when IP is dynamic)",
+        "Don't promise the IP can be registered permanently — support explicitly says nets have unstable IPs (line 307-309)",
+        "Don't claim it works for download or as a general VPN — Shelter is sanction-bypass (rafe-tahrim) for gaming",
+        "Don't invent prices, specific IPs, or expiry dates not in the user's own پلن من output",
+        "Don't sound robotic or dump all steps as one wall of text — one step at a time, warm tone"
+      ],
+      "confidence": 0.9,
+      "verification": {
+        "verified_by": "adversarial_agent",
+        "is_grounded": true,
+        "tone_ok": true,
+        "hallucinations_removed": []
+      }
+    },
+    {
+      "intent": "ip_registration_failure",
+      "fa_label": "خطای ثبت آیپی / آیپی ثبت نمی‌شود",
+      "tier": "copilot",
+      "summary": "IP registration errors out (filtershekan warning, link won't open, Irancell, plan-not-found). Copilot tier: walk the user through VPN/DNS off, re-register auto from the bot, browser/modem fallback, then manual code via ipnumberia.com or ip.sheltertm.com. Escalate to human if manual+alt-browser still fail or token/plan-not-found points to an account-side issue.",
+      "final_answer_fa": "سلام عزیز 🙏 نگران نباش، باهم درستش می‌کنیم.\nاول فیلترشکن و دی‌ان‌استو خاموش کن، بعد از داخل ربات «ثبت آیپی اتوماتیک» رو دوباره بزن.\nاگه صفحه ثبت باز نشد، با یه مرورگر دیگه امتحان کن و یه بار مودم یا گوشیتو خاموش‌روشن کن.\nبازم نشد، از ipnumberia.com یا ip.sheltertm.com کدتو بگیر و از «پلن من» روی ثبت دستی بزن داداش.\nیادت باشه قبل هر بار استفاده باید ثبت آیپی کنی؛ اگه آیپیت ثابت نباشه هر بار لازمه ❤️",
+      "clarifying_questions": [
+        "چقدر از آخرین ثبت آیپیت می‌گذره و الان دقیقا چه اروری موقع ثبت می‌گیری؟",
+        "نت و دستگاهت (کنسول/پی‌سی/موبایل) و بازیت چیه؟",
+        "ثبت آیپی رو اتوماتیک می‌زنی یا دستی، و فیلترشکن خاموشه؟"
+      ],
+      "required_tools": [
+        "get_registered_ip",
+        "get_subscription",
+        "get_server_status"
+      ],
+      "facts_used": [
+        "Manual IP registration via ipnumberia.com or ip.sheltertm.com, then bot 'پلن من' -> ثبت دستی",
+        "Re-register IP before every use; after device reboot or network switch; every time if IP is not static",
+        "Turn off VPN/filtershekan and DNS while registering",
+        "Fallback: try another browser and power-cycle the modem/phone",
+        "Free/test public DNS: 78.157.32.202 and 78.157.32.205",
+        "Auto vs manual IP registration is done from inside the Telegram bot (@shelterviprobot)"
+      ],
+      "escalate_when": [
+        "After manual-code and alternate-browser steps still fail",
+        "Token expired or 'plan not found' on register, pointing to an account-side problem -> human to inspect account/IP binding",
+        "User pairs the failure with a refund demand"
+      ],
+      "do_not_say": [
+        "Don't promise it's a server outage without checking the live status flag",
+        "Don't claim a two-user plan or simultaneous multi-device registration exists",
+        "Don't blame ping/speed here (that's a separate intent) or promise low ping",
+        "Don't guarantee a refund — refund needs tech sign-off that it's a Shelter-side fault",
+        "Don't invent IPs, prices, or tokens not shown to the user"
+      ],
+      "confidence": 0.9,
+      "verification": {
+        "verified_by": "adversarial_agent",
+        "is_grounded": true,
+        "tone_ok": true,
+        "hallucinations_removed": []
+      }
+    },
+    {
+      "intent": "ip_transfer_between_accounts",
+      "fa_label": "انتقال ثبت آیپی به شماره/اکانت دیگر",
+      "tier": "human",
+      "summary": "Customer wants to move their plan/IP-registration from one Telegram account/number to another. Real support pattern: confirm it's possible, then ask for source + destination user codes (کد کاربری مبدا و مقصد), found in the first bot message or «پلن من». Always human — it changes account ownership/binding; verify both codes first. No prices appear in these pairs.",
+      "final_answer_fa": "سلام عزیز، آره این کار شدنیه ❤️🙏\nفقط کد کاربری مبدا و کد کاربری مقصد رو برام بفرست.\nکد کاربری رو از اولین پیام ربات یا بخش «پلن من» پیدا می‌کنی.\nبه همین شکل بنویس: کد کاربری مبدا: ____ / کد کاربری مقصد: ____\nهر دو کد رو که بدی، انتقال رو برات انجام میدیم داداش 🙏",
+      "clarifying_questions": [],
+      "required_tools": [
+        "account_lookup (source + destination user code)",
+        "plan_transfer_action",
+        "get_subscription"
+      ],
+      "facts_used": [
+        "انتقال پلن با گرفتن کد کاربری مبدا و مقصد انجام می‌شود",
+        "کد کاربری در اولین پیام ربات / بخش «پلن من» قرار دارد",
+        "هر دی‌ان‌اس فقط روی یک دستگاه قابل استفاده است",
+        "بیش از ۲۰ بار ثبت آیپی در ۲۴ ساعت باعث مسدودی ۲۴ ساعته می‌شود"
+      ],
+      "escalate_when": [
+        "همیشه به انسان واگذار شود چون مالکیت/بایندینگ اکانت تغییر می‌کند",
+        "قبل از انتقال باید هر دو کد کاربری (مبدا و مقصد) تایید شوند"
+      ],
+      "do_not_say": [
+        "انتقال را بدون تایید هر دو کد کاربری مبدا و مقصد انجام نده",
+        "وعده انتقال آنی یا خودکار نده؛ این یک عملیات اکانت دستی توسط انسان است",
+        "قیمت یا مبلغ مشخصی نقل نکن (در داده‌های این اینتنت قیمتی وجود ندارد)",
+        "نگو روی چند دستگاه همزمان می‌شود استفاده کرد"
+      ],
+      "confidence": 0.9,
+      "verification": {
+        "verified_by": "adversarial_agent",
+        "is_grounded": true,
+        "tone_ok": true,
+        "hallucinations_removed": [
+          "facts_used includes 'هر دی‌ان‌اس فقط روی یک دستگاه قابل استفاده است' — true per line 356 but belongs to a different (device-usage) intent, not the transfer flow; irrelevant padding here.",
+          "facts_used includes 'بیش از ۲۰ بار ثبت آیپی در ۲۴ ساعت باعث مسدودی ۲۴ ساعته می‌شود' — true per line 291 but is an IP-registration ban policy from a different intent, not part of account transfer."
+        ]
+      }
+    },
+    {
+      "intent": "conn_generic_not_working",
+      "fa_label": "اتصال برقرار نمی‌شود (عمومی)",
+      "tier": "copilot",
+      "summary": "Generic 'doesn't connect' triage: re-register IP via Telegram bot (no VPN/DNS on), confirm shared net between phone and console/PC, ask last IP-registration time + device, and request an error screenshot. Copilot tier; escalate to human if diagnostics are exhausted or a refund is demanded.",
+      "final_answer_fa": "سلام عزیز، نگران نباش کنارتم درستش می‌کنیم 🙏❤️\nاول یه بار دیگه از داخل ربات تلگرام ثبت آیپی کن، موقع ثبت هم فیلترشکن و دی‌ان‌اس خاموش باشه.\nحواست باشه نت گوشی و کنسول/سیستمت یکی باشه.\nآخرین بار کِی ثبت آیپی کردی و دستگاهت چیه؟\nاگه بازم نشد، یه عکس از ارور بفرست تا دقیق چک کنم داداش.",
+      "clarifying_questions": [],
+      "required_tools": [
+        "get_subscription",
+        "get_registered_ip",
+        "get_server_status",
+        "get_game_support"
+      ],
+      "facts_used": [
+        "re-register IP each time before use",
+        "VPN and DNS off during registration/test",
+        "shared net phone+console",
+        "single primary DNS, empty secondary",
+        "DNS delivered via 'پلن من' in bot",
+        "support is chat-only, no phone"
+      ],
+      "escalate_when": [
+        "تشخیص‌ها تمام شد (ثبت آیپی مجدد، تست تکی primary، مراحل دستگاه و نت انجام شد) و هنوز وصل نمی‌شود -> انسان",
+        "کاربر همزمان درخواست بازگشت وجه/refund دارد -> فوراً انسان",
+        "نشانه مشکل سمت اکانت یا plan-not-found -> انسان"
+      ],
+      "do_not_say": [
+        "وعده زمان دقیق رفع مشکل ندادن",
+        "مقصر دانستن قطعی نت کشور بدون بررسی (مگر داده تأیید کند)",
+        "قول بازگشت وجه یا شارژ خودکار اکانت ندادن",
+        "ذکر آیپی یا قیمت خاصی که در داده نیست",
+        "گفتن اینکه تماس تلفنی/پشتیبانی صوتی داریم — فقط همین چت پشتیبانی هست"
+      ],
+      "confidence": 0.86,
+      "verification": {
+        "verified_by": "adversarial_agent",
+        "is_grounded": false,
+        "tone_ok": true,
+        "hallucinations_removed": [
+          "answer_lines[1] instructs to register IP with 'دی‌ان‌اس روشن' (DNS ON). This contradicts every relevant real reply, which say to register/test with VPN(filtershekan) AND DNS OFF (e.g. lines 6, 23: 'فیلترشکن و دی ان استون قطع باشه'; lines 134-135: 'بدون vpn و یا dns'; line 49: register IP first, then enter DNS). DNS must be OFF during registration, not ON."
+        ]
+      }
+    },
+    {
+      "intent": "conn_console_setup",
+      "fa_label": "مشکل اتصال روی کنسول (PS5/Xbox)",
+      "tier": "copilot",
+      "summary": "Golden-answer card for conn_console_setup (مشکل اتصال روی کنسول PS5/Xbox). Copilot tier. Standard console triage from real pairs: ثبت آیپی مجدد از ربات قبل هر بازی، نت مشترک موبایل/کنسول، تست تک‌پرایمری دی ان اس اختصاصی، ریبوت PS / کلیر مک و تغییر پورت ایکس باکس، خاموش بودن فیلترشکن، و درخواست عکس تست کانکشن. NAT type به نت پایه برمی‌گردد.",
+      "final_answer_fa": "سلام عزیز، یک قدم با هم پیش بریم تا کنسولت اوکی شه 🙏❤️\nاول حتما نت گوشی و کنسولت یکی باشه و قبل هر بار بازی، از ربات تلگرام ثبت آیپی اتوماتیک رو بزن.\nهر چهار خط دی ان اس اختصاصی داخل پلنت رو تکی توی Primary بزن و Secondary رو خالی بذار و تست کن.\nاگه باز نشد، رو PS یه بار مودم و کنسول رو خاموش روشن کن؛ رو ایکس باکس کلیر مک کن و پورت رو عوض کن.\nفیلترشکن و دی ان اس قبلی هم موقع کار خاموش باشه داداش.\nاگه بازم ارور داد، یه عکس از تست کانکشن کنسول بفرست تا برات چک کنم ❤️",
+      "clarifying_questions": [
+        "نت و کنسول و بازی‌ت چیه عزیز؟",
+        "آخرین بار کِی ثبت آیپی کردی؟",
+        "ثبت آیپی اتوماتیک انجام میدی یا دستی؟",
+        "چه اروری بهت میده؟ میشه عکس تست کانکشن رو بفرستی؟"
+      ],
+      "required_tools": [
+        "get_registered_ip",
+        "get_subscription",
+        "get_game_support",
+        "get_server_status"
+      ],
+      "facts_used": [
+        "ثبت آیپی قبل هر استفاده از ربات تلگرام",
+        "نت مشترک موبایل و کنسول",
+        "تست تکی هر چهار خط دی ان اس در Primary و خالی گذاشتن Secondary",
+        "کلیر مک و تغییر پورت برای ایکس باکس",
+        "خاموش/روشن مودم و کنسول برای PS",
+        "خاموش بودن فیلترشکن و دی ان اس قبلی موقع کار",
+        "NAT type به نت پایه برمی‌گردد"
+      ],
+      "escalate_when": [
+        "قطعی/اختلال سمت PSN یا Xbox مشکوک باشد",
+        "همه مراحل کنسول (ثبت آیپی مجدد، تک‌پرایمری، ریبوت/کلیر مک، تغییر پورت) انجام شده و هنوز وصل نمیشه",
+        "کاربر همزمان درخواست برگشت وجه دارد"
+      ],
+      "do_not_say": [
+        "وعده پشتیبانی قطعی یک بازی خاص بدون چک کردن sheltertm.com/games",
+        "گفتن اینکه تست رایگان داریم (در داده‌ها تست غیرفعال/نداریم اعلام شده)",
+        "نسبت دادن مشکل نت‌تایپ به دی ان اس به جای نت پایه کاربر",
+        "قول زمان دقیق رفع مشکل سمت سرور/تلگرام",
+        "اعلام آیپی یا قیمت ساختگی که در پلن کاربر نیست"
+      ],
+      "confidence": 0.9,
+      "verification": {
+        "verified_by": "adversarial_agent",
+        "is_grounded": true,
+        "tone_ok": true,
+        "hallucinations_removed": []
+      }
+    },
+    {
+      "intent": "conn_pc_setup",
+      "fa_label": "مشکل اتصال روی کامپیوتر (ویندوز)",
+      "tier": "copilot",
+      "summary": "PC/Windows connection fix: re-register IP with phone on shared net, flush DNS via cmd-as-admin, restart, enter DNS singly (primary only), then request an error screenshot if still failing. Copilot tier.",
+      "final_answer_fa": "سلام داداش 🙏 بریم قدم به قدم درستش کنیم.\nاول با گوشی وارد ربات شو، فیلترشکن خاموش، ثبت آیپی کن (نت گوشی و پی‌سی یکی باشه).\nبعد cmd رو administrator باز کن و بزن: ipconfig /flushdns\nیه بار سیستم رو خاموش روشن کن، بعد دی‌ان‌اس‌ها رو تکی توی primary بزن و secondary رو خالی بذار.\nاگه بازم وصل نشد، یه عکس از ارور بفرست تا چک کنم عزیز ❤️",
+      "clarifying_questions": [
+        "نتت چیه و روی چه لانچری مشکل داری (بتل‌نت/اپیک/EA)؟",
+        "آخرین بار کی ثبت آیپی کردی؟"
+      ],
+      "required_tools": [
+        "get_registered_ip",
+        "get_dns_for_category",
+        "get_subscription",
+        "get_server_status"
+      ],
+      "facts_used": [
+        "PC fix: open cmd as administrator and run 'ipconfig /flushdns', then restart (pairs lines 88-93, 135-139)",
+        "Re-register IP before every use from the phone, VPN off, phone+PC on same network (pairs lines 110-112, 142-148, 422-424)",
+        "Enter DNS lines one at a time: primary only, secondary empty or 0.0.0.0 (pairs lines 51, 318)",
+        "Request an error screenshot to diagnose (pairs lines 99, 128, 342, 345, 455)",
+        "Diagnose with speedcheck.ir, VPN+DNS off (pairs lines 17-20, 208-209)",
+        "Video tutorial available on Aparat: Aparat.com/sheltertm (pairs lines 293-299)"
+      ],
+      "escalate_when": [
+        "After PC steps are exhausted (re-registered IP, flushdns, restart, single-primary DNS tested) and the launcher still won't connect -> human",
+        "Launcher-side block / unsupported launcher (e.g. Rockstar) -> human or unsupported-game path",
+        "User pairs the failure with a refund demand -> human"
+      ],
+      "do_not_say": [
+        "Don't promise a specific game/launcher works if it's not confirmed supported (e.g. EA/Battlefield 6 launcher was said 'we probably don't support' in the data)",
+        "Don't blame Shelter for ping/speed/packet-loss — DNS is sanction-bypass only; speed depends on the base internet",
+        "Don't invent DNS IPs, prices, or expiry dates not pulled from the user's own 'پلن من' / not present in the data",
+        "Don't claim there's a downloadable Shelter app for PC; setup is via cmd + DNS entry"
+      ],
+      "confidence": 0.86,
+      "verification": {
+        "verified_by": "adversarial_agent",
+        "is_grounded": true,
+        "tone_ok": true,
+        "hallucinations_removed": []
+      }
+    },
+    {
+      "intent": "conn_mobile_apn_setup",
+      "fa_label": "مشکل اتصال موبایل / تنظیمات APN",
+      "tier": "copilot",
+      "summary": "Golden-answer card for conn_mobile_apn_setup (copilot tier): mobile/hotspot fix = DNS changer (Android)/Unicorn (iOS), force IPv4, correct APN per ISP, re-register IP via bot before each use, then enter mobile DNS codes; ask net+device+game and request error screenshot; escalate if APN+re-register still fails or if money/filtered-game involved.",
+      "final_answer_fa": "سلام عزیز، وقتت بخیر 🙏 بریم قدم‌به‌قدم درستش کنیم.\nاول رو اندروید برنامه DNS changer و رو آیفون یونیکورن رو نصب کن.\nتنظیمات نت گوشیت رو حتما رو IPv4 بذار، و APN رو با سیم‌کارتت ست کن: همراه اول mcinet، ایرانسل mtnirancell، رایتل RighTel، شاتل‌موبایل shatelmobile، سامانتل samantel.\nبعدش از ربات تلگرام ثبت آیپی کن (آیپی‌ها ثابت نیستن، قبل هر بار استفاده باید دوباره ثبت بشه)، بعد کدای مخصوص موبایل رو داخل برنامه وارد کن.\nاگه باز نشد، نت و گوشی و بازیت رو بهم بگو و یه عکس از ارور بفرست تا چک کنم ❤️",
+      "clarifying_questions": [],
+      "required_tools": [
+        "get_registered_ip",
+        "get_subscription",
+        "get_dns_for_category",
+        "get_game_support",
+        "get_server_status"
+      ],
+      "facts_used": [
+        "grounded in qa_fine_conn_mobile_apn_setup.txt real support replies"
+      ],
+      "escalate_when": [
+        "Device-specific APN tried and IPv4 + re-registration done but still no connection -> human",
+        "Game itself is filtered from inside Iran (not a DNS issue) -> explain, do not troubleshoot as connection",
+        "User pairs the failure with a refund/compensation demand -> human"
+      ],
+      "do_not_say": [
+        "Don't promise a specific game works without checking Sheltertm.com/games",
+        "Don't claim the IP can be registered permanently/once (نت‌ها عدم پایداری آیپی دارن)",
+        "Don't offer a two-user/multi-device plan (اکانت تک کاربره است)",
+        "Don't blame Shelter for high ping/packet loss/matchmaking — that's the base ISP/UDP, not the DNS",
+        "Don't invent APN values or DNS addresses not in the data"
+      ],
+      "confidence": 0.9,
+      "verification": {
+        "verified_by": "adversarial_agent",
+        "is_grounded": true,
+        "tone_ok": true,
+        "hallucinations_removed": []
+      }
+    },
+    {
+      "intent": "game_login_match_fail",
+      "fa_label": "ورود به بازی می‌شود اما لاگین/مچ‌میکینگ خراب است",
+      "tier": "copilot",
+      "summary": "DNS connects and game menu opens, but login/verification or matchmaking fails. Stock guidance: re-register IP via phone before each use, try DNS entries singly (primary only), and explain that match/UDP join is the base ISP's responsibility, not the DNS — test on a stable/different net. Ask for an error screenshot. Copilot tier; escalate to human if the customer disputes the ISP explanation and demands a refund.",
+      "final_answer_fa": "سلام عزیز، وقتت بخیر 🙏 ممنون که پیام دادی.\nاول یه دور دوباره با گوشی ثبت آیپی کن، قبل هر اتصال این کارو حتما انجام بده ❤️\nدی ان اس‌ها رو تکی امتحان کن: پرایمری رو بزن و سکندری رو خالی بذار و تست کن.\nاگه باز توی لاگین یا مچ گیر کرد، یه عکس از ارور بفرست برام چک کنم.\nراستش مشکل جوین‌نشدن به مچ به udp نت پایه‌ات برمی‌گرده داداش و از سمت دی ان اس کاری نمیشه کرد؛ اگه میشه با یه نت دیگه یا نت پایدارتر هم تست کن 🙏❤️",
+      "clarifying_questions": [
+        "نت و کنسول و بازیت چیه عزیز؟",
+        "میشه یه عکس از ارور بفرستی؟",
+        "آخرین باری که ثبت آیپی کردی کِی بوده؟"
+      ],
+      "required_tools": [
+        "get_registered_ip",
+        "get_game_support",
+        "get_server_status",
+        "get_dns_for_category"
+      ],
+      "facts_used": [
+        "Match-join / login failures are attributed to UDP of the user's base ISP, not the DNS (real replies: 'مشکل جوین نشدن به مچ ... کاملا به udp اینترنت پایه شما مربوط هست')",
+        "User must re-register IP (ثبت آیپی) via phone before EACH connection, using automatic registration in the Telegram bot",
+        "DNS codes go into the console; IPs must NOT be set on the PS5 — register IP with the phone then enter DNS in the console",
+        "Troubleshooting: enter the four dedicated DNS lines singly — primary filled, secondary empty — and test",
+        "Suggest testing on a different or more stable net",
+        "Ask the customer for a screenshot of the error to check",
+        "Speedtest link used by support: speedcheck.ir"
+      ],
+      "escalate_when": [
+        "Customer disputes the 'it's your ISP / UDP' explanation and demands refund or compensation -> route to human",
+        "Customer insists the match/login failure is the DNS's fault after the standard guidance"
+      ],
+      "do_not_say": [
+        "Do not promise the DNS will fix matchmaking/login failures — those depend on the user's base ISP/UDP",
+        "Do not invent server IPs, prices, or game-support guarantees not present in the real pairs",
+        "Do not claim a specific game is supported without checking game support",
+        "Do not promise refunds or subscription compensation"
+      ],
+      "confidence": 0.86,
+      "verification": {
+        "verified_by": "adversarial_agent",
+        "is_grounded": true,
+        "tone_ok": true,
+        "hallucinations_removed": []
+      }
+    },
+    {
+      "intent": "speed_ping_packetloss",
+      "fa_label": "سرعت پایین / پینگ بالا / پکت‌لاس",
+      "tier": "copilot",
+      "summary": "Golden answer for speed_ping_packetloss: warm Shelter voice, diagnose via speedcheck.ir (VPN+DNS off), set the sanction-bypass-only expectation, attribute ping/packet to base internet, and offer the download DNS list. Copilot tier.",
+      "final_answer_fa": "سلام عزیز، وقتت بخیر 🙏❤️\nبذار اول مشکل رو پیدا کنیم؛ یه اسپید چک از Speedcheck.ir برام بگیر و بفرست.\nموقع تست حتما فیلترشکن و دی‌ان‌اس خاموش باشه تا نتیجه دقیق باشه.\nببین داداش، دی‌ان‌اس شلتر در اصل رفع تحریمه؛ سرعت و پینگ و پکت‌لاس به خود اینترنتت بستگی داره.\nاین چند روز هم اختلال اینترنت بین‌الملل هست که پکت‌لاس میاره و از سمت نته، نه دی‌ان‌اس.\nاگه کارت بیشتر دانلوده، بگو تا لیست دی‌ان‌اس مخصوص دانلود رو برات بفرستم ❤️",
+      "clarifying_questions": [
+        "مشکل اصلیت سرعت دانلوده یا پینگ بالا و پکت‌لاس توی بازی؟",
+        "از چه نتی استفاده می‌کنی (همراه اول/ایرانسل/فیبر) و رو چه دستگاهی؟"
+      ],
+      "required_tools": [
+        "get_server_status",
+        "get_subscription",
+        "get_registered_ip",
+        "get_game_support"
+      ],
+      "facts_used": [
+        "speedcheck.ir is the diagnostic speedtest; run it with VPN/filtershekan and DNS turned off",
+        "Shelter DNS is sanction-bypass (rafe-tahrim) only; speed, ping and packet loss depend on the user's own base internet",
+        "Packet loss during the recent disruptions comes from international-internet issues, not the DNS",
+        "Download-heavy users are pointed to the public download DNS list (e.g. 64.6.64.6 / 64.6.65.6, 4.2.2.2, 8.8.8.8 / 8.8.4.4, 45.90.28.190 / 45.90.30.190)"
+      ],
+      "escalate_when": [
+        "Speedtest shows the DNS clearly degrading throughput beyond the base internet",
+        "User escalates to a refund or compensation over performance"
+      ],
+      "do_not_say": [
+        "Do not promise the DNS will lower ping or boost speed — it only bypasses sanctions",
+        "Do not blame Shelter's servers for ping/packet without a speedtest",
+        "Do not invent prices, server IPs, or guarantees not present in the pairs",
+        "Do not give a robotic one-shot wall of text — ask one step at a time"
+      ],
+      "confidence": 0.83,
+      "verification": {
+        "verified_by": "adversarial_agent",
+        "is_grounded": true,
+        "tone_ok": true,
+        "hallucinations_removed": [
+          "required_tools lists get_server_status, get_subscription, get_registered_ip, get_game_support — none of these are used or implied by this diagnostic flow in the real replies; they are irrelevant to the answer content (not a claim inside answer_lines, but unsupported card metadata)."
+        ]
+      }
+    },
+    {
+      "intent": "outage_service_status",
+      "fa_label": "سرویس/سرورها قطع است یا کار می‌کند؟",
+      "tier": "copilot",
+      "summary": "Customer asks if the service/servers/DNS are up right now, if burned servers are back, or reports a mass outage. Reply warmly, quote the live status flag (don't guess), point to @sheltertm for announcements, reassure on compensation, and escalate if no reliable status or a region-specific outage.",
+      "final_answer_fa": "سلام عزیز، روزت بخیر 🌹\nالان وضعیت سرورا رو برات چک می‌کنم و دقیق بهت میگم اوکیه یا هنوز اختلال داره.\nاین روزا به‌خاطر شرایط نت کشور یه ناپایداری هست و فعلاً طبیعیه، داریم درستش می‌کنیم 🙏\nهر تغییری هم بشه داخل چنل @sheltertm اعلام میشه، اونجا رو دنبال کن.\nنگران اشتراکتم نباش، بابت روزای قطعی جبران میشه ❤️",
+      "clarifying_questions": [
+        "دقیقا چه بازی یا سرویسی برات بالا نمیاد؟",
+        "آخرین بار کی ثبت آیپی کردی؟",
+        "نت و کنسولت چیه؟"
+      ],
+      "required_tools": [
+        "get_server_status",
+        "get_subscription"
+      ],
+      "facts_used": [],
+      "escalate_when": [
+        "No reliable live status flag available to quote (must not guess)",
+        "User reports a region-specific outage that needs ops confirmation",
+        "User disputes the status and demands refund/compensation"
+      ],
+      "do_not_say": [
+        "Do not promise a specific time/date that servers will be back or sales reopen",
+        "Do not guess current status without checking the live status flag",
+        "Do not claim the outage is fixed when it isn't, or blame only the user's setup for a known mass outage",
+        "Do not invent new DNS IPs, prices, or compensation amounts beyond what's in the data"
+      ],
+      "confidence": 0.86,
+      "verification": {
+        "verified_by": "adversarial_agent",
+        "is_grounded": true,
+        "tone_ok": true,
+        "hallucinations_removed": []
+      }
+    },
+    {
+      "intent": "sub_status_expiry",
+      "fa_label": "وضعیت اشتراک / تاریخ انقضا / زمان باقی‌مانده",
+      "tier": "copilot",
+      "summary": "Customer asks about plan expiry/remaining time or sees 'expired' unexpectedly. Support routes them to 'پلن من' in the bot for expiry + DNS, asks for the user code to verify, and reassures. Copilot tier; escalate to human on a paid-vs-shown discrepancy or when the expiry dispute is really an outage-compensation request.",
+      "final_answer_fa": "سلام عزیز 🙏 برای دیدن وضعیت اشتراکت داخل ربات شلتر روی «پلن من» بزن.\nهمونجا تاریخ انقضا و زمان باقی‌مونده‌ت رو بهت نشون میده ❤️\nاگه می‌خوای دقیق برات چک کنم، کد کاربریت رو با یه استارت مجدد ربات بفرست.\nاگه برات «منقضی» می‌زنه ولی نباید باشه، نگران نباش، خودم برات پیگیری می‌کنم.",
+      "clarifying_questions": [
+        "کد کاربریت رو با استارت مجدد ربات می‌فرستی برات چک کنم؟",
+        "وقتی روی «پلن من» می‌زنی دقیقا چی نشون میده؟"
+      ],
+      "required_tools": [
+        "get_subscription",
+        "get_payment_status"
+      ],
+      "facts_used": [
+        "bot 'پلن من' output returns expiry + remaining time + 4 DNS lines",
+        "support requests user code + /start to look up the plan",
+        "renewal discount auto-applied at purchase, no separate code"
+      ],
+      "escalate_when": [
+        "Discrepancy between what the customer paid and what the account/bot shows -> human (billing)",
+        "Expiry dispute is really an outage/lost-days compensation request -> route on compensation policy (jobrani / 10% renewal discount line), human if customer disputes the credited amount or hasn't received it"
+      ],
+      "do_not_say": [
+        "Don't promise a specific number of compensation days or a refund - compensation policy is jobrani-credit / 10% renewal discount only, not a direct refund",
+        "Don't quote an expiry date or remaining days from memory - it must come from the bot 'پلن من' lookup for that user code",
+        "Don't offer a two-user plan or a first-purchase discount code - plans are single-user and there is no first-buy code",
+        "Don't claim the plan is active/expired without verifying via the user code"
+      ],
+      "confidence": 0.82,
+      "verification": {
+        "verified_by": "adversarial_agent",
+        "is_grounded": true,
+        "tone_ok": true,
+        "hallucinations_removed": []
+      }
+    },
+    {
+      "intent": "outage_compensation_request",
+      "fa_label": "درخواست جبران روزهای از دست رفته (قطعی/جنگ)",
+      "tier": "copilot",
+      "summary": "Outage-compensation requests: reassure the user that lost days will be credited back to the account once the network stabilizes; if a credit notice arrived but didn't land, collect user code + latest plan to investigate; point to channel @sheltertm for announcements. Copilot tier. No refunds are offered (credit/extension only). Escalate to human billing/ops if the user disputes the credited amount, demands a refund, or the credit hasn't landed after the promised window.",
+      "final_answer_fa": "سلام عزیز، روزت بخیر 🙏❤️ بابت روزهایی که با قطعی نت از دست رفت واقعاً درکت می‌کنیم.\nاصلاً نگران اشتراکت نباش؛ به محض اینکه وضعیت نت‌ها کامل استیبل بشه، روزهای از دست رفته رو به اکانتت اضافه می‌کنیم.\nاگه پیام «چند روز اضافه شد» اومده ولی هنوز توی پلنت نیست، کد کاربری و آخرین لیست پلنت رو از اول ربات برام بفرست تا پیگیری کنم.\nهر تصمیم و خبر تازه‌ای هم داخل چنل @sheltertm اعلام میشه، اونجا رو هم چک کن.\nشلتر با شماست داداش، یه قدم یه قدم درستش می‌کنیم ❤️🫂",
+      "clarifying_questions": [
+        "کد کاربری‌ت (اولین پیام ربات) رو برام می‌فرستی؟",
+        "پیام «چند روز اضافه شد» برات اومده یا نه؟",
+        "آخرین لیست پلنت چی نشون میده؟"
+      ],
+      "required_tools": [
+        "get_subscription",
+        "get_payment_status",
+        "get_server_status"
+      ],
+      "facts_used": [
+        "Lost days from the outage are added back to the account once the network fully stabilizes ('روزهای از دست رفته اضافه میشه / طی روزهای آتی به اکانتتون اضافه میکنه')",
+        "If a credit notice ('X روز اضافه شد') arrived but didn't land, support asks for the user code (first bot message) and the latest plan list",
+        "Subscription-status decisions and announcements are posted to channel @sheltertm",
+        "Service/DNS instability during the outage period is acknowledged as normal until access reopens"
+      ],
+      "escalate_when": [
+        "Customer disputes the credited amount (e.g. 'only X days for months of outage')",
+        "Customer wants a direct refund instead of credit/extension",
+        "The promised credit hasn't landed after the stated window",
+        "Attached content implies a billing/account action that needs ops"
+      ],
+      "do_not_say": [
+        "Do not promise a direct cash refund — Shelter offers credit/day-extension only",
+        "Do not commit to an exact number of days or an exact date the credit will land",
+        "Do not invent prices, IPs, or a fixed compensation amount not present in the conversation",
+        "Do not blame the user or say 'you should have messaged sooner' as a brush-off",
+        "Do not guarantee the credit is already applied without checking the account"
+      ],
+      "confidence": 0.85,
+      "verification": {
+        "verified_by": "adversarial_agent",
+        "is_grounded": true,
+        "tone_ok": true,
+        "hallucinations_removed": []
+      }
+    },
+    {
+      "intent": "payment_not_received",
+      "fa_label": "پرداخت شد ولی اشتراک/دی‌ان‌اس فعال نشد",
+      "tier": "human",
+      "summary": "Payment deducted but plan not activated / no DNS delivered / double or wrong charge. Warm reply: ask user code, explain failed-gateway payments auto-return within ~72h, have them check 'پلن من', else investigate transaction and activate manually. Always human once money moves.",
+      "final_answer_fa": "عزیز بابت دردسرش شرمنده‌ام 🙏❤️\nاول کد کاربری‌تو از همون پیام اول ربات برام بفرست.\nاگه پرداخت تو درگاه کنسل شده، پول به ما نرسیده و تا ۷۲ ساعت خودش به کارتت برمی‌گرده.\nیه بار هم تو ربات «پلن من» رو بزن ببین چی میاد برات.\nاگه برنگشت یا دوبار کم شده، با همون کد کاربری بررسی می‌کنیم و دستی برات فعالش می‌کنیم.",
+      "clarifying_questions": [
+        "کد کاربری‌ات از اولین پیام ربات چنده؟",
+        "تو مرحله پرداخت چه پیام یا اروری دیدی؟",
+        "چه مبلغی و کِی از حسابت کم شد؟",
+        "تو «پلن من» الان چی نشون میده؟"
+      ],
+      "required_tools": [
+        "account_lookup",
+        "get_payment_status",
+        "get_subscription"
+      ],
+      "facts_used": [
+        "Failed/cancelled gateway payments auto-return to the card within ~72h (money never reached Shelter)",
+        "Ask for the user code from the first bot message to look up the account",
+        "Customer can press 'پلن من' in @ShelterVIProbot to check plan status",
+        "Card-to-card fallback: 6037XXXXXXXXXXXX / [نام صاحب کارت], send receipt photo",
+        "Plans are single-user; renewal gives ~10% discount via the bot",
+        "Free public test DNS: 78.157.32.202 / 78.157.32.205"
+      ],
+      "escalate_when": [
+        "Always escalate to human once money movement is involved — verify the transaction first",
+        "Money deducted but not returned after the ~72h window",
+        "Double-charge or wrong amount charged (e.g. 411t instead of 229t)",
+        "Receipt sent via card-to-card fallback needs human to confirm and activate",
+        "Transaction lookup shows payment reached Shelter but plan never activated → manually activate"
+      ],
+      "do_not_say": [
+        "Do not promise an instant refund or a specific refund amount beyond the ~72h auto-return",
+        "Do not claim the plan is activated before verifying the transaction and user code",
+        "Do not blame only the bank without checking the transaction",
+        "Do not invent prices, plan durations, or transaction numbers not given by the customer",
+        "Do not auto-resolve and close — money cases always go to a human"
+      ],
+      "confidence": 0.9,
+      "verification": {
+        "verified_by": "adversarial_agent",
+        "is_grounded": true,
+        "tone_ok": true,
+        "hallucinations_removed": []
+      }
+    },
+    {
+      "intent": "payment_gateway_error",
+      "fa_label": "خطای درگاه پرداخت / درگاه کار نمی‌کند",
+      "tier": "copilot",
+      "summary": "Payment gateway errors/won't load before money is taken. Warm copilot reply: offer card-to-card fallback (card 6037XXXXXXXXXXXX, Danial Moein-Abadi), ask for receipt photo + user code so support can manually activate. If money was already deducted at the gateway it auto-returns within ~72h (that's payment_not_received). Escalate to human at the receipt step to confirm payment and credit the account.",
+      "final_answer_fa": "سلام عزیز 🙏 ممنون که شلتر رو انتخاب کردی.\nاگه درگاه پرداخت ارور میده یا بالا نمیاد، می‌تونی کارت‌به‌کارت کنی و ما خودمون برات فعال می‌کنیم ❤️\nشماره کارت: 6037XXXXXXXXXXXX به نام [نام صاحب کارت]\nبعد از واریز، حتماً عکس رسید رو بفرست.\nکد کاربری‌تم که اول ربات تلگرام هست برام بفرست تا اشتراکت رو فعال کنم.",
+      "clarifying_questions": [
+        "آیا پولی از حسابت کم شده یا فقط درگاه ارور میده و وارد صفحه پرداخت نمیشی؟"
+      ],
+      "required_tools": [
+        "get_payment_status",
+        "get_subscription",
+        "card_payment_fallback",
+        "gateway_status_flag"
+      ],
+      "facts_used": [
+        "Card-to-card fallback number when gateway is down: 6037XXXXXXXXXXXX ([نام صاحب کارت])",
+        "Must send receipt photo (عکس رسید) after card-to-card",
+        "Must send user code (کد کاربری) from top of the Telegram bot for manual activation",
+        "If money was already deducted at the gateway, it auto-returns within ~72 hours (تا ۷۲ ساعت برگشت می‌خوره)",
+        "When sales/servers are temporarily closed, gateway is disabled and reopens within a few days"
+      ],
+      "escalate_when": [
+        "At the receipt step: a human must confirm the card-to-card receipt and manually credit/activate the account",
+        "Money was actually deducted (not just a gateway error) -> this is payment_not_received, always human to verify the transaction"
+      ],
+      "do_not_say": [
+        "Do not promise the gateway will be fixed at an exact time/date",
+        "Do not auto-activate the account yourself without a human confirming the receipt",
+        "Do not claim a deducted payment is lost - failed-gateway payments auto-return within ~72h",
+        "Do not invent prices, plan durations, or discount codes not shown in the pairs",
+        "Do not offer a refund or trial as part of this flow"
+      ],
+      "confidence": 0.9,
+      "verification": {
+        "verified_by": "adversarial_agent",
+        "is_grounded": true,
+        "tone_ok": true,
+        "hallucinations_removed": []
+      }
+    },
+    {
+      "intent": "refund_request",
+      "fa_label": "درخواست بازگشت وجه / عودت پول",
+      "tier": "human",
+      "summary": "Refund requests are always human-tier. Real support never refunds on the spot: they apologize warmly, run final diagnostics (device+game+error screenshot, speedcheck.ir test without VPN/DNS), pull the user code to check plan+payment, and only refund if tech confirms a Shelter-side fault that can't be resolved. The honest closing promise from the data: if it's our problem and we can't fix it, we will refund.",
+      "final_answer_fa": "عزیز جان ببخش که اذیت شدی، بذار اول با هم درستش کنیم 🙏\nبگو رو چه دستگاه و چه بازی‌ای وصل نمیشی و یه عکس از ارور بفرست.\nیه تست هم بدون فیلترشکن و دی‌ان‌اس از speedcheck.ir بگیر و برام بفرست ❤️\nکد کاربریت رو هم بده تا پلن و پرداختت رو دقیق چک کنم.\nقول میدم اگه مشکل از سمت ما باشه و نتونیم حلش کنیم، حتما وجهت رو عودت میدیم 🙏",
+      "clarifying_questions": [
+        "رو چه دستگاهی (PS5/Xbox/PC/موبایل) و چه بازی‌ای وصل نمیشی؟",
+        "آخرین بار کِی ثبت آیپی کردی و چه اروری میگیری؟ (یه عکس بفرست)",
+        "کد کاربریت رو میدی تا پلن و پرداختت رو چک کنم؟"
+      ],
+      "required_tools": [
+        "get_subscription",
+        "get_payment_status",
+        "get_registered_ip",
+        "get_server_status",
+        "get_game_support"
+      ],
+      "facts_used": [
+        "No trial currently active, so refund only after the customer tries and we fail to fix a Shelter-side problem (line 351-352: 'در حال حاضر اشتراک تست نداریم... هر مشکلی از سمت ما باشه نتونیم حلش کنیم... حتما عودت میدیم')",
+        "Diagnose before any refund: test on a different net (line 42), speedcheck.ir with VPN+DNS off (line 137-138), ask which game/where it fails (line 208, 211)",
+        "Shelter DNS is رفع تحریم (sanction-bypass) only; ping/disconnects depend on the game and the user's own ISP, not the DNS (line 172, 312)",
+        "Refund can be refused when a trial/pre-purchase ask was available (line 318: 'امکانش نیست... هم تست داشتیم هم میتونستید بپرسید')",
+        "Card-to-card / user code is collected to verify the account and payment (line 80, 449)"
+      ],
+      "escalate_when": [
+        "Always escalate to a human — refund_request is human-tier in the taxonomy.",
+        "Run final diagnostics first; a refund requires tech sign-off that the fault is Shelter-side and unresolved.",
+        "Anger or a legal/scam accusation paired with the refund demand -> human immediately.",
+        "Money movement (already paid, double-charge, cancel order) is involved -> human verifies transaction before any action."
+      ],
+      "do_not_say": [
+        "Do not promise or process a refund yourself — only a human can approve it after tech sign-off.",
+        "Do not deny the refund flatly or accuse the customer; stay warm and diagnose first.",
+        "Do not blame the user's ISP dismissively; explain gently that ping/speed depend on the base net.",
+        "Do not invent prices, refund timelines, amounts, or a trial offer that isn't currently active.",
+        "Do not quote an IP or DNS address that isn't in the customer's own plan."
+      ],
+      "confidence": 0.88,
+      "verification": {
+        "verified_by": "adversarial_agent",
+        "is_grounded": true,
+        "tone_ok": true,
+        "hallucinations_removed": []
+      }
+    },
+    {
+      "intent": "complaint_anger",
+      "fa_label": "شکایت و نارضایتی شدید (بدون فحاشی)",
+      "tier": "copilot",
+      "summary": "Angry/frustrated venting without profanity. Lead with genuine empathy and apology, then one concrete next step (device+net+game, re-register IP, speedcheck) instead of a canned brush-off. Copilot tier; escalate to human the moment anger is paired with a refund/compensation/legal demand or it's a repeat unresolved contact.",
+      "final_answer_fa": "خیلی عذر می‌خوام بابت این وضعیت عزیز، درکت می‌کنم 🙏❤️\nنگران نباش، خودم قدم‌به‌قدم راهنماییت می‌کنم.\nاول بگو روی چه دستگاه و چه نتی و چه بازی‌ای؟\nیه بار دیگه از ربات ثبت آیپی کن (فیلترشکن و دی‌ان‌اس خاموش).\nبعد یه شات از Speedcheck.ir بفرست تا ببینم مشکل از نته یا از ما.",
+      "clarifying_questions": [
+        "دستگاهت چیه؟ (PS5 / Xbox / PC / موبایل)",
+        "با چه نتی وصل می‌شی؟ (همراه اول / ایرانسل / مخابرات / فیبر...)",
+        "داخل چه بازی‌ای مشکل داری؟",
+        "آخرین بار کِی ثبت آیپی کردی؟"
+      ],
+      "required_tools": [
+        "account_lookup",
+        "sentiment_flag",
+        "kb_empathy_macro",
+        "last_ip_registration_timestamp",
+        "speedtest_link"
+      ],
+      "facts_used": [
+        "Empathy macro tone from real replies: 'من راهنماییتون میکنم عزیز نگران نباشین 🙏❤️' and 'داداش من خیلی عذر میخوام'",
+        "Free public test DNS 78.157.32.202 / 78.157.32.205",
+        "Speedcheck.ir used to isolate net vs Shelter fault",
+        "Re-register IP before each use (filtershekan + DNS off)",
+        "DNS is rafe-tahrim only; ping/jitter come from the base net",
+        "Outage policy: no direct refund/restore; 10% renewal discount only"
+      ],
+      "escalate_when": [
+        "Anger paired with a refund, compensation, or legal threat",
+        "Repeat unresolved contact (already came back after prior failed fix)",
+        "Disputes the credited compensation amount or demands money back over the outage",
+        "Tone tips into profanity/insults (route to abuse_profanity, human de-escalation)"
+      ],
+      "do_not_say": [
+        "Don't dismiss with a canned 'پیام‌ها زیاده، صبر کن' as the only reply — acknowledge the feeling first",
+        "Don't promise a refund or guaranteed compensation (no direct refund in outage period; only 10% renewal discount)",
+        "Don't blame the customer or say کاری از دست ما برنمیاد without offering a next step",
+        "Don't claim a fix/server is 'اوکی شد' without checking status — verify, don't guess",
+        "Don't quote prices, dates, or DNS addresses not present in the data"
+      ],
+      "confidence": 0.85,
+      "verification": {
+        "verified_by": "adversarial_agent",
+        "is_grounded": true,
+        "tone_ok": true,
+        "hallucinations_removed": []
+      }
+    },
+    {
+      "intent": "abuse_profanity",
+      "fa_label": "فحاشی و توهین",
+      "tier": "human",
+      "summary": "abuse_profanity is tier=human: profane/insulting messages must never be auto-answered. The only real abusive opener in the data ('این چه گندیه ناموساً؟') was handled with calm empathy — apologize, blame the current base-net/national-internet disruption (not the DNS), ask which ISP/device/game, suggest testing another net, request an error screenshot — then hand to a human agent to de-escalate or apply policy.",
+      "final_answer_fa": "سلام عزیز، اول از همه بابت این تجربه‌ی بد واقعاً عذرمیخوام 🙏❤️\nکاملاً درکت میکنم داداش، بیا با هم درستش کنیم.\nاین چند روز نت پایه‌ی کشور اختلال شدیدی داره و خیلی از قطعی‌ها از همونه.\nبگو با چه نتی و چه دستگاه و بازیی هستی، و اگه میشه با یه نت دیگه هم یه تست بزن.\nاگه میشه از ارور یه عکس بفرست تا دقیق‌تر پیگیری کنیم.",
+      "clarifying_questions": [
+        "با چه اینترنتی (همراه اول/ایرانسل/مخابرات...) و روی چه دستگاه و بازیی هستی؟",
+        "میشه از اروری که میگیری یه عکس بفرستی؟"
+      ],
+      "required_tools": [
+        "profanity_classifier",
+        "account_lookup"
+      ],
+      "facts_used": [
+        "base-net disruption framing",
+        "ask net+device+game",
+        "test with another net",
+        "request error screenshot"
+      ],
+      "escalate_when": [
+        "Always human — never auto-reply to a profane/insulting message; hand to an agent for de-escalation or to apply policy.",
+        "Profanity paired with a refund/compensation or legal threat -> human immediately."
+      ],
+      "do_not_say": [
+        "Don't fire back, defend the brand, or argue with the insult.",
+        "Don't quote prices, IPs, or policies not present in these pairs.",
+        "Don't send a canned flow or robotic auto-reply.",
+        "Don't promise a refund or compensation amount yourself — that needs a human/billing.",
+        "Don't blame the customer."
+      ],
+      "confidence": 0.74,
+      "verification": {
+        "verified_by": "adversarial_agent",
+        "is_grounded": false,
+        "tone_ok": true,
+        "hallucinations_removed": [
+          "answer_line 2 promises 'تنهات نمیذاریم تا درست شه' (we won't leave you until it's fixed) — no real reply makes a fix/stay-with-you commitment; this is an invented reassurance.",
+          "answer_line 5 promises 'همین الان میدمش دست همکارم تا دستی پیگیری کنه' (handing it to my colleague right now for manual follow-up) — no real reply mentions an internal handoff to a colleague; invented escalation promise.",
+          "answer_line 1 'معطلی' (delay/waiting) is mildly added detail; the real abusive-opener reply (line 479) contains no apology for delay, though delay-apologies appear generically elsewhere — keep only as soft, generic apology."
+        ]
+      }
+    },
+    {
+      "intent": "dns_concept_question",
+      "fa_label": "سوال مفهومی درباره دی‌ان‌اس/سرویس",
+      "tier": "auto",
+      "summary": "Golden-answer card for dns_concept_question (auto tier): explains the service is an IP-authenticated dedicated DNS for anti-filtering + console gaming, IPv4-only with no domain yet, no separate app, IP must be registered before each use, and it is sanction-bypass not a speed/ping booster. Grounded only in the real Q->A pairs and taxonomy.",
+      "final_answer_fa": "سلام عزیز، وقتت بخیر 🙏 سرویس ما یه دی‌ان‌اس اختصاصیه برای رد کردن تحریم بازی‌ها و بازی آنلاین رو کنسول.\nنحوه کارش ساده‌ست: قبل از هر استفاده آیپیتو داخل ربات تلگرام ثبت می‌کنی و دی‌ان‌اسو روی همون دستگاهی که باهاش بازی می‌کنی می‌زنی ❤️\nیه نکته: نت گوشی و کنسولت باید یکی باشه و هر بار قبل استفاده دوباره ثبت آیپی کنی.\nفعلا فقط نسخه ipv4 می‌دیم و دامنه نداریم، داریم روش کار می‌کنیم داداش.\nضمنا دی‌ان‌اس برای دانلود یا کم‌کردن پینگ و تغییر NAT نیست؛ اون به نت پایه‌ت بستگی داره 🙏",
+      "clarifying_questions": [
+        "میخوای بدونی فرق دی‌ان‌اس رایگان و اختصاصی چیه، یا روش وصل شدنش؟",
+        "روی چه دستگاهی می‌خوای استفاده کنی، کنسول یا کامپیوتر؟"
+      ],
+      "required_tools": [
+        "kb_service_concepts"
+      ],
+      "facts_used": [
+        "IPv4 only, no domain yet (در حال حاضر دامنه داده نمیشه و داریم روش کار میکنیم)",
+        "Connection model: register IP in bot, set DNS on the device you play on (آیپیتونو داخل بات ثبت میکنید و دی ان اسو داخل دستگاه میزنید)",
+        "DNS برنامه نویسان is for programming sites/apps (مخصوص سایت ها و برنامه های برنامه نویسی)",
+        "Device IP differs from internet IP (آیپی دستگاه با آیپی اینترنت فرق میکنه)",
+        "Free public Shelter DNS: 78.157.32.202 / 78.157.32.205",
+        "Service is sanction-bypass for gaming, not for download; DNS can't lower ping/NAT (that comes from base net)",
+        "Must re-register IP before every use; shared net between phone and console"
+      ],
+      "escalate_when": [
+        "Question reveals a misconfigured expectation tied to a refund (e.g. 'I needed a domain like dns.x.com / IPv6') -> copilot",
+        "Conceptual question is actually a connection failure in disguise (DNS errors, not connecting) -> route to ip_registration_failure / conn_* flow"
+      ],
+      "do_not_say": [
+        "Do not claim there is an installable Shelter app/software (data only says no separate app needed)",
+        "Do not promise a domain/IPv6 or a fixed delivery date for it (only 'in progress')",
+        "Do not quote prices, plan durations, or discount codes (not present in these pairs)",
+        "Do not promise the DNS will improve download speed, ping, or NAT type",
+        "Do not invent details about 'turbo DNS' (not answered in the real data)",
+        "Do not offer phone support (only this chat exists)"
+      ],
+      "confidence": 0.84,
+      "verification": {
+        "verified_by": "adversarial_agent",
+        "is_grounded": true,
+        "tone_ok": true,
+        "hallucinations_removed": [
+          "Answer line 4 ('نرم‌افزار جدا هم نمی‌خواد' / no separate software needed) is not explicitly stated in any real support reply. It is a reasonable inference (you only use the Telegram bot + device DNS settings), but no pair affirms 'no separate app'. It also sits awkwardly next to the fact that registration DOES happen via a separate Telegram bot. Weakly grounded — softened in corrected lines."
+        ]
+      }
+    },
+    {
+      "intent": "free_download_dns_request",
+      "fa_label": "دی‌ان‌اس رایگان / دی‌ان‌اس دانلود",
+      "tier": "auto",
+      "summary": "Info-only (auto) reply for the free/download DNS request: hand out the public test DNS pair and the download DNS list, note Shelter is sanction-bypass not download-optimized, and remind to register IP. All IPs/policies are taken verbatim from the real Q->A pairs; no escalation per taxonomy ('Never; pure info').",
+      "final_answer_fa": "سلام عزیز، قربونت 🙏❤️\nدی‌ان‌اس رایگان شلتر برای تست اینان: 78.157.32.202 و 78.157.32.205\nولی شلتر در اصل برای رفع تحریم و بازیه، نه دانلود داداش\nبرای دانلود این‌ها بهترن، تکی توی پرایمری بزن و سکندری رو خالی بذار:\n8.8.8.8 و 8.8.4.4 ، 4.2.2.2 ، 64.6.64.6 و 64.6.65.6 ، 45.90.28.190 و 45.90.30.190\nیادت نره قبل هر بار استفاده ثبت آیپی کنی 🙏",
+      "clarifying_questions": [],
+      "required_tools": [
+        "get_dns_for_category"
+      ],
+      "facts_used": [
+        "Free public/test DNS: 78.157.32.202 and 78.157.32.205",
+        "Download DNS list: 8.8.8.8, 8.8.4.4, 4.2.2.2, 64.6.64.6, 64.6.65.6, 45.90.28.190, 45.90.30.190",
+        "Policy: Shelter DNS is tuned for sanction-bypass/gaming, not download ('دی ان اس شلتر برای دانلود نیست')",
+        "Enter DNS singly in primary, leave secondary empty"
+      ],
+      "escalate_when": [],
+      "do_not_say": [],
+      "confidence": 0.88,
+      "verification": {
+        "verified_by": "adversarial_agent",
+        "is_grounded": true,
+        "tone_ok": true,
+        "hallucinations_removed": [
+          "The reminder 'اگه پلن اختصاصی داری یادت نره قبل استفاده ثبت آیپی کنی' narrows IP registration to dedicated-plan owners. The real replies instruct all users to register IP before each use (e.g. 'قبل هر بار استفاده، از داخل ربات تلگرام ثبت آی‌پی اتوماتیک انجام بدید حتما')—there is no support for conditioning it on owning a dedicated plan."
+        ]
+      }
+    },
+    {
+      "intent": "bot_telegram_issue",
+      "fa_label": "ربات/تلگرام کار نمی‌کند",
+      "tier": "auto",
+      "summary": "Telegram-wide bot/link outage unrelated to Shelter. Reassure it's a Telegram-side disruption hitting all bots, ask user to wait then retry /start, and offer card-to-card as the fallback when they need to buy now. Auto tier per taxonomy.",
+      "final_answer_fa": "سلام و درود عزیز 🌹 یه نفس بکش، این مشکل از سمت شلتر نیست.\nاین اختلال مربوط به خود تلگرامه و همه‌ی ربات‌ها درگیرش شدن، نه فقط ربات ما.\nفعلاً یه کم صبر کن تا تلگرام درستش کنه، بعد دوباره /start رو بزن و چک کن 🙏\nاگه عجله داری و میخوای همین الان تهیه کنی، کارت‌به‌کارت برات فعال می‌کنیم 👇\nشماره کارت: 6037XXXXXXXXXXXX ([نام صاحب کارت]) — بعد عکس رسید رو بفرست ❤️",
+      "clarifying_questions": [
+        "میخوای صبر کنی تا ربات تلگرام درست بشه، یا همین الان کارت‌به‌کارت برات فعال کنیم؟",
+        "الان دقیقاً کدوم بخش کار نمیکنه؟ /start یا «پلن من» یا لینک خرید؟"
+      ],
+      "required_tools": [
+        "bot_health_flag",
+        "kb_telegram_outage_macro",
+        "card_payment_fallback"
+      ],
+      "facts_used": [
+        "Bot/Telegram outage affects all bots and is unrelated to Shelter",
+        "Card-to-card fallback: 6037XXXXXXXXXXXX ([نام صاحب کارت]), send receipt photo",
+        "Purchase bot @shelterviprobot",
+        "Retry via /start once bot is back"
+      ],
+      "escalate_when": [
+        "Bot is confirmed up (bot_health_flag healthy) but this specific user still can't access it -> human (account-side)",
+        "User sends card-to-card receipt for manual activation -> human to confirm receipt and credit the account",
+        "User reports the bot redirecting to another channel / possible hack -> ask for screenshot and route to human"
+      ],
+      "do_not_say": [
+        "Do not blame Shelter's servers or promise an exact fix time for the Telegram outage",
+        "Do not invent a downtime ETA or claim the bot is 'definitely fixed now' without checking bot_health_flag",
+        "Do not quote prices, plan durations, or trial details (not present in these pairs)",
+        "Do not promise refunds or compensation here",
+        "Do not ask for the card-to-card receipt and then auto-activate without a human confirming it"
+      ],
+      "confidence": 0.92,
+      "verification": {
+        "verified_by": "adversarial_agent",
+        "is_grounded": true,
+        "tone_ok": true,
+        "hallucinations_removed": []
+      }
+    },
+    {
+      "intent": "other_unclear",
+      "fa_label": "سایر / نامشخص",
+      "tier": "copilot",
+      "summary": "Catch-all for ambiguous/one-word/forwarded messages. Reply in Shelter's warm voice with a short clarifying triage prompt (device + net + game, last IP-registration time, or ask for an error screenshot) rather than guessing. Copilot tier; escalate to human if intent stays unclear after one prompt or the content implies a billing/account action.",
+      "final_answer_fa": "،، سلام و درود 🌹 در خدمتم عزیز\nیه ذره بیشتر بگو تا دقیق راهنماییت کنم 🙏\nدستگاه و نتت چیه و رو چه بازی‌ای؟\nآخرین بار کی ثبت آیپی کردی؟ (قبل هر استفاده باید از ربات انجام بشه)\nاگه ارور می‌گیری یه عکس از ارور بفرست ❤️",
+      "clarifying_questions": [
+        "دستگاه و نت و بازیت چیه؟",
+        "آخرین ثبت آیپیت کی بوده؟",
+        "ارور خاصی می‌گیری؟ میشه عکسشو بفرستی؟"
+      ],
+      "required_tools": [
+        "account_lookup",
+        "kb_triage_questions"
+      ],
+      "facts_used": [
+        "Re-register IP from the Telegram bot before every use",
+        "Bot for buy/test and 'پلن من': @shelterviprobot",
+        "Default triage: ask device + net + game, or ask for an error screenshot"
+      ],
+      "escalate_when": [
+        "After one clarifying prompt the intent still can't be determined",
+        "Attached content (forwarded plan/receipt/user code) implies a billing or account action",
+        "Message is really a payment/refund/compensation case in disguise -> human"
+      ],
+      "do_not_say": [
+        "Do not guess the user's device/game/net -- always ask first",
+        "Do not quote a specific price (none stated in real pairs)",
+        "Do not promise a refund or compensation amount",
+        "Do not invent server/IP addresses or claim YouTube/intl traffic works",
+        "Do not hand out the card number unless the user is actually paying via card fallback"
+      ],
+      "confidence": 0.84,
+      "verification": {
+        "verified_by": "adversarial_agent",
+        "is_grounded": true,
+        "tone_ok": true,
+        "hallucinations_removed": []
+      }
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+# Shelter Support AI — one command to run everything:  docker compose up -d --build
+services:
+  shelter:
+    build: .
+    image: shelter-support-ai
+    container_name: shelter
+    restart: unless-stopped
+    # The dashboard has NO built-in auth and can change the bot token / send replies.
+    # By default it is exposed on the host's 3939. PROTECT IT (see DEPLOY.md → Security):
+    #   - firewall 3939 to your own IP, or
+    #   - put it behind a reverse proxy with a password, or
+    #   - bind to localhost only (change the line below to "127.0.0.1:3939:3939") and use an SSH tunnel.
+    ports:
+      - "3939:3939"
+    volumes:
+      # config + secrets — mounted read-write so changes from the dashboard (model, token) persist
+      - ./.env:/app/.env
+      # live data (conversations, learning, escalations, status) — persisted across restarts
+      - shelter-data:/app/dashboard/data
+    # the connector reads /app/.env directly; env_file here is an optional convenience
+    env_file:
+      - .env
+
+volumes:
+  shelter-data:
